@@ -119,14 +119,19 @@
       "headIndent": 33
     },
     "checked": {
-      "color": "#660C1030",
+      "color": "#2F6B3A",
       "headIndent": 33
     },
     "checked-canceled": {
-      "color": "#4C0C1030",
+      "regex": "(^\\h*[\\*\\-\\+]{1} |^\\h*[0-9]+[\\.\\)] )(\\[\\-\\] )(.*)",
+      "matchPosition": 0,
+      "color": "#8C8778",
+      "strikethroughStyle": 1,
       "headIndent": 33
     },
     "checked-scheduled": {
+      "regex": "(^\\h*[\\*\\-\\+]{1} |^\\h*[0-9]+[\\.\\)] )(\\[\\>\\] )(.*)",
+      "matchPosition": 0,
       "color": "#660C1030",
       "headIndent": 33
     },
@@ -160,18 +165,10 @@
       "type": "italic",
       "headIndent": 33
     },
-    "link": {
-      "color": "#1E2A9E"
-    },
-    "note-title-link": {
-      "color": "#1E2A9E"
-    },
-    "schedule-to-date-link": {
-      "color": "#1E2A9E"
-    },
-    "schedule-from-date-link": {
-      "color": "#1E2A9E"
-    },
+    "link": {},
+    "note-title-link": {},
+    "schedule-to-date-link": {},
+    "schedule-from-date-link": {},
     "done-date": {
       "color": "#660C1030"
     },

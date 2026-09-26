@@ -7,7 +7,7 @@
   "editor": {
     "backgroundColor": "#0C1030",
     "altBackgroundColor": "#141B6B",
-    "tintColor": "#F3F0E8",
+    "tintColor": "#D49A1A",
     "tintColor2": "#D49A1A",
     "textColor": "#F3F0E8",
     "toolbarBackgroundColor": "#0C1030",
@@ -119,14 +119,19 @@
       "headIndent": 33
     },
     "checked": {
-      "color": "#66F3F0E8",
+      "color": "#7CBF7A",
       "headIndent": 33
     },
     "checked-canceled": {
-      "color": "#4CF3F0E8",
+      "regex": "(^\\h*[\\*\\-\\+]{1} |^\\h*[0-9]+[\\.\\)] )(\\[\\-\\] )(.*)",
+      "matchPosition": 0,
+      "color": "#7A766C",
+      "strikethroughStyle": 1,
       "headIndent": 33
     },
     "checked-scheduled": {
+      "regex": "(^\\h*[\\*\\-\\+]{1} |^\\h*[0-9]+[\\.\\)] )(\\[\\>\\] )(.*)",
+      "matchPosition": 0,
       "color": "#66F3F0E8",
       "headIndent": 33
     },
@@ -160,18 +165,10 @@
       "type": "italic",
       "headIndent": 33
     },
-    "link": {
-      "color": "#F3F0E8"
-    },
-    "note-title-link": {
-      "color": "#F3F0E8"
-    },
-    "schedule-to-date-link": {
-      "color": "#F3F0E8"
-    },
-    "schedule-from-date-link": {
-      "color": "#F3F0E8"
-    },
+    "link": {},
+    "note-title-link": {},
+    "schedule-to-date-link": {},
+    "schedule-from-date-link": {},
     "done-date": {
       "color": "#66F3F0E8"
     },
