@@ -139,15 +139,15 @@
     },
     "flagged-1": {
       "color": "#0C1030",
-      "backgroundColor": "#26D49A1A"
+      "backgroundColor": "#261E2A9E"
     },
     "flagged-2": {
       "color": "#0C1030",
-      "backgroundColor": "#4CD49A1A"
+      "backgroundColor": "#591E2A9E"
     },
     "flagged-3": {
-      "color": "#0C1030",
-      "backgroundColor": "#80D49A1A"
+      "color": "#F3F0E8",
+      "backgroundColor": "#1E2A9E"
     },
     "quote-mark": {
       "font": "noteplanstate",
@@ -196,12 +196,7 @@
     },
     "highlighted": {
       "color": "#0C1030",
-      "backgroundColor": "#8CD49A1A",
-      "borderRadius": 0,
-      "inlineBorder": true,
-      "horizontalMargin": 2,
-      "leftBorderPadding": 3,
-      "rightBorderPadding": 3
+      "backgroundColor": "#D49A1A"
     },
     "highlighted-left-marker": {
       "color": "#4C0C1030"
