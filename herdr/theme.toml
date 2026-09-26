@@ -1,6 +1,4 @@
 [theme]
-# Azulejo Brutalism. Base "terminal" follows Ghostty; every token is overridden per mode
-# because the terminal theme's dim colours assume a dark background.
 name = "terminal"
 auto_switch = true
 light_name = "terminal"
@@ -48,4 +46,3 @@ red = "#E0705A"
 mauve = "#C08AD6"
 teal = "#6FC3CF"
 peach = "#E8914A"
-
