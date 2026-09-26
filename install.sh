@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim)
+#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed)
 # Theme files are copied, so re-run after editing them here. Config files that get edited
-# (Ghostty, Herdr) are backed up next to themselves as <file>.bak first.
+# (Ghostty, Herdr, Zed) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -75,11 +75,30 @@ install_nvim() {
   fi
 }
 
+install_zed() {
+  local dir="$CONFIG/zed" settings="$CONFIG/zed/settings.json"
+  local line='"theme": { "mode": "system", "light": "Azulejo Brutalism Light", "dark": "Azulejo Brutalism Dark" },'
+  [[ -d "$dir" ]] || { skip zed "$dir not found"; return; }
+  mkdir -p "$dir/themes"
+  cp "$REPO/zed/azulejo-brutalism.json" "$dir/themes/"
+  # settings.json is JSONC, so only a one-line "theme" entry is rewritten; anything else is left to you.
+  if grep -qF "$line" "$settings" 2>/dev/null; then
+    :
+  elif grep -qE '^\s*"theme": *(\{[^{}]*\}|"[^"]*"),?\s*$' "$settings" 2>/dev/null; then
+    cp "$settings" "$settings.bak"
+    sed -i '' -E "s|^([[:space:]]*)\"theme\": *(\{[^{}]*\}\|\"[^\"]*\"),?[[:space:]]*\$|\1$line|" "$settings"
+  else
+    say zed "theme installed; set it with: $line"
+    return
+  fi
+  say zed "theme installed and set (follows system appearance)"
+}
+
 tools=("$@")
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim)" >&2; exit 1 ;;
+    noteplan | ghostty | herdr | nvim | zed) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed)" >&2; exit 1 ;;
   esac
 done
