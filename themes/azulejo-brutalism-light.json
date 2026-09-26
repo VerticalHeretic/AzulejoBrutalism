@@ -94,7 +94,7 @@
       "font": "Menlo-Regular",
       "size": 15,
       "color": "#1E2A9E",
-      "backgroundColor": "#599FB2E4",
+      "backgroundColor": "#D6DAE7",
       "borderRadius": 0,
       "inlineBorder": true,
       "horizontalMargin": 2,
@@ -139,15 +139,15 @@
     },
     "flagged-1": {
       "color": "#0C1030",
-      "backgroundColor": "#261E2A9E"
+      "backgroundColor": "#1A1E2A9E"
     },
     "flagged-2": {
       "color": "#0C1030",
-      "backgroundColor": "#591E2A9E"
+      "backgroundColor": "#331E2A9E"
     },
     "flagged-3": {
-      "color": "#F3F0E8",
-      "backgroundColor": "#1E2A9E"
+      "color": "#0C1030",
+      "backgroundColor": "#591E2A9E"
     },
     "quote-mark": {
       "font": "noteplanstate",
@@ -178,7 +178,7 @@
     "phonenumber": {},
     "hashtag": {
       "color": "#1E2A9E",
-      "backgroundColor": "#599FB2E4",
+      "backgroundColor": "#D6DAE7",
       "borderRadius": 0,
       "inlineBorder": true,
       "horizontalMargin": 2,
@@ -187,7 +187,7 @@
     },
     "attag": {
       "color": "#1E2A9E",
-      "backgroundColor": "#599FB2E4",
+      "backgroundColor": "#D6DAE7",
       "borderRadius": 0,
       "inlineBorder": true,
       "horizontalMargin": 2,
