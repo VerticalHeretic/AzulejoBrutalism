@@ -80,7 +80,7 @@ install_zed() {
   local line='"theme": { "mode": "system", "light": "Azulejo Brutalism Light", "dark": "Azulejo Brutalism Dark" },'
   [[ -d "$dir" ]] || { skip zed "$dir not found"; return; }
   mkdir -p "$dir/themes"
-  cp "$REPO/zed/azulejo-brutalism.json" "$dir/themes/"
+  cp "$REPO/zed/themes/azulejo-brutalism.json" "$dir/themes/"
   # settings.json is JSONC, so only a one-line "theme" entry is rewritten; anything else is left to you.
   if grep -qF "$line" "$settings" 2>/dev/null; then
     :
