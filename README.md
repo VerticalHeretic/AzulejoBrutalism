@@ -6,7 +6,7 @@ Color scheme/theme for different tools, created by love for Brutalism and Azulej
 
 ```sh
 ./install.sh                 # all tools
-./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode
+./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains
 ```
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
@@ -19,6 +19,7 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 - **Fastfetch:** run `fastfetch`; the tile uses the terminal's blue and yellow.
 - **Xcode:** set automatically if Xcode is closed; otherwise pick them in Settings → Themes.
 - **VS Code / Cursor:** restart, then choose Azulejo Brutalism Light/Dark as the preferred light and dark themes.
+- **Android Studio / JetBrains:** restart, then pick the scheme in Settings → Editor → Color Scheme (or import the `.icls` from `jetbrains/`).
 
 ## NotePlan
 

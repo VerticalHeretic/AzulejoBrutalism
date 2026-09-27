@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode)
+#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains)
 # Theme files are copied, so re-run after editing them here. Config files that get edited
 # (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
@@ -134,11 +134,27 @@ install_vscode() {
   say vscode 'restart, then set "workbench.preferredLightColorTheme"/"preferredDarkColorTheme" and "window.autoDetectColorScheme": true'
 }
 
+install_jetbrains() {
+  # Android Studio (Google/) and other JetBrains IDEs keep per-version config dirs; install into each.
+  local found=0 dir
+  shopt -s nullglob
+  for dir in "$HOME/Library/Application Support/Google/AndroidStudio"* "$HOME/Library/Application Support/JetBrains/"*/; do
+    [[ -d "$dir" ]] || continue
+    mkdir -p "$dir/colors"
+    cp "$REPO"/jetbrains/*.icls "$dir/colors/"
+    found=1
+    say jetbrains "schemes installed in ${dir%/}"
+  done
+  shopt -u nullglob
+  [[ $found -eq 1 ]] || { skip jetbrains "no Android Studio or JetBrains IDE config found"; return; }
+  say jetbrains "restart, then pick them in Settings → Editor → Color Scheme"
+}
+
 tools=("$@")
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode)" >&2; exit 1 ;;
+    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains)" >&2; exit 1 ;;
   esac
 done
