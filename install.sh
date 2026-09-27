@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch)
+#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode)
 # Theme files are copied, so re-run after editing them here. Config files that get edited
 # (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
@@ -106,11 +106,39 @@ install_fastfetch() {
   say fastfetch "logo and config installed; run fastfetch"
 }
 
+install_xcode() {
+  local dir="$HOME/Library/Developer/Xcode/UserData/FontAndColorThemes"
+  [[ -d "$HOME/Library/Developer/Xcode" ]] || { skip xcode "Xcode user data not found"; return; }
+  mkdir -p "$dir"
+  cp "$REPO"/xcode/*.xccolortheme "$dir/"
+  # Xcode rewrites its preferences on quit, so only switch themes while it is closed.
+  if pgrep -x Xcode >/dev/null; then
+    say xcode "themes installed; pick them in Settings → Themes (Light and Dark tabs)"
+  else
+    defaults write com.apple.dt.Xcode XCFontAndColorCurrentTheme "Azulejo Brutalism Light.xccolortheme"
+    defaults write com.apple.dt.Xcode XCFontAndColorCurrentDarkTheme "Azulejo Brutalism Dark.xccolortheme"
+    say xcode "themes installed and set for Light and Dark"
+  fi
+}
+
+install_vscode() {
+  local name="verticalheretic.azulejo-brutalism-0.1.0" found=0 dir
+  for dir in "$HOME/.vscode/extensions" "$HOME/.cursor/extensions"; do
+    [[ -d "$dir" ]] || continue
+    rm -rf "${dir:?}/$name"
+    cp -R "$REPO/vscode" "$dir/$name"
+    found=1
+    say vscode "extension installed in $dir"
+  done
+  [[ $found -eq 1 ]] || { skip vscode "no VS Code or Cursor extensions folder"; return; }
+  say vscode 'restart, then set "workbench.preferredLightColorTheme"/"preferredDarkColorTheme" and "window.autoDetectColorScheme": true'
+}
+
 tools=("$@")
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed | fastfetch) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch)" >&2; exit 1 ;;
+    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode)" >&2; exit 1 ;;
   esac
 done

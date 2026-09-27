@@ -6,7 +6,7 @@ Color scheme/theme for different tools, created by love for Brutalism and Azulej
 
 ```sh
 ./install.sh                 # all tools
-./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch
+./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode
 ```
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
@@ -17,6 +17,8 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 - **Neovim:** becomes LazyVim's colorscheme on the next start.
 - **Zed:** switches right away and follows the system appearance.
 - **Fastfetch:** run `fastfetch`; the tile uses the terminal's blue and yellow.
+- **Xcode:** set automatically if Xcode is closed; otherwise pick them in Settings → Themes.
+- **VS Code / Cursor:** restart, then choose Azulejo Brutalism Light/Dark as the preferred light and dark themes.
 
 ## NotePlan
 
@@ -47,3 +49,13 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 | Light                                          | Dark                                         |
 | ---------------------------------------------- | -------------------------------------------- |
 | ![Fastfetch Light](images/fastfetch-light.png) | ![fastfetch Dark](images/fastfetch-dark.png) |
+
+## Xcode
+
+| Light                                  | Dark                                 |
+| -------------------------------------- | ------------------------------------ |
+| ![Xcode Light](images/xcode-light.png) | ![Xcode Dark](images/xcode-dark.png) |
+
+## License
+
+[MIT](LICENSE)
