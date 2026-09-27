@@ -55,7 +55,3 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 | Light                                  | Dark                                 |
 | -------------------------------------- | ------------------------------------ |
 | ![Xcode Light](images/xcode-light.png) | ![Xcode Dark](images/xcode-dark.png) |
-
-## License
-
-[MIT](LICENSE)
