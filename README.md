@@ -6,7 +6,7 @@ Color scheme/theme for different tools, created by love for Brutalism and Azulej
 
 ```sh
 ./install.sh                 # all tools
-./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed
+./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch
 ```
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
@@ -16,6 +16,7 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 - **Herdr:** the script reloads it for you.
 - **Neovim:** becomes LazyVim's colorscheme on the next start.
 - **Zed:** switches right away and follows the system appearance.
+- **Fastfetch:** run `fastfetch`; the tile uses the terminal's blue and yellow.
 
 ## NotePlan
 
@@ -34,3 +35,15 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 | Light                                  | Dark                                 |
 | -------------------------------------- | ------------------------------------ |
 | ![Neovim Light](images/nvim-light.png) | ![Neovim Dark](images/nvim-dark.png) |
+
+## Zed
+
+| Light                              | Dark                             |
+| ---------------------------------- | -------------------------------- |
+| ![Zed Light](images/zed-light.png) | ![Zed Dark](images/zed-dark.png) |
+
+## Fastfetch
+
+| Light                                          | Dark                                         |
+| ---------------------------------------------- | -------------------------------------------- |
+| ![Fastfetch Light](images/fastfetch-light.png) | ![fastfetch Dark](images/fastfetch-dark.png) |

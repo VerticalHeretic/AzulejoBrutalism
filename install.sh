@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed)
+#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch)
 # Theme files are copied, so re-run after editing them here. Config files that get edited
-# (Ghostty, Herdr, Zed) are backed up next to themselves as <file>.bak first.
+# (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -94,11 +94,23 @@ install_zed() {
   say zed "theme installed and set (follows system appearance)"
 }
 
+install_fastfetch() {
+  local dir="$CONFIG/fastfetch"
+  command -v fastfetch >/dev/null || { skip fastfetch "fastfetch not installed"; return; }
+  mkdir -p "$dir"
+  cp "$REPO/fastfetch/azulejo.txt" "$dir/"
+  if [[ -f "$dir/config.jsonc" ]] && ! cmp -s "$REPO/fastfetch/config.jsonc" "$dir/config.jsonc"; then
+    cp "$dir/config.jsonc" "$dir/config.jsonc.bak"
+  fi
+  cp "$REPO/fastfetch/config.jsonc" "$dir/"
+  say fastfetch "logo and config installed; run fastfetch"
+}
+
 tools=("$@")
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed)" >&2; exit 1 ;;
+    noteplan | ghostty | herdr | nvim | zed | fastfetch) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch)" >&2; exit 1 ;;
   esac
 done
