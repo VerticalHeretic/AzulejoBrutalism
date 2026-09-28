@@ -13,7 +13,7 @@
     "toolbarBackgroundColor": "#0C1030",
     "toolbarIconColor": "#F3F0E8",
     "menuItemColor": "#F3F0E8",
-    "timeBlockColor": "#F3F0E8",
+    "timeBlockColor": "#D49A1A",
     "shouldOverwriteFont": true
   },
   "styles": {
@@ -220,6 +220,9 @@
     },
     "underline-right-tilde": {
       "color": "#4CF3F0E8"
+    },
+    "time": {
+      "color": "#D49A1A"
     }
   }
 }
