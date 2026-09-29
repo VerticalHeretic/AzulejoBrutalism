@@ -21,6 +21,11 @@
         "label": "Azulejo Brutalism Dark",
         "uiTheme": "vs-dark",
         "path": "./themes/azulejo-brutalism-dark.json"
+      },
+      {
+        "label": "Azulejo Brutalism OLED",
+        "uiTheme": "vs-dark",
+        "path": "./themes/azulejo-brutalism-oled.json"
       }
     ]
   },

@@ -7,7 +7,10 @@ Color scheme/theme for different tools, created by love for Brutalism and Azulej
 ```sh
 ./install.sh                 # all tools
 ./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains
+./install.sh --oled          # true-black OLED variant instead of Dark
 ```
+
+**OLED** is Dark with a pure `#000000` background and near-black surfaces; accents are unchanged. With `--oled` the script sets it as the dark theme in Ghostty, Herdr, Zed, Xcode and Neovim (via `vim.g.azulejo_brutalism_oled = true`). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 

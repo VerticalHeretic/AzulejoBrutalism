@@ -1,5 +1,6 @@
 -- Azulejo Brutalism: Ink on Glaze (light) / Glaze on Ink (dark), Cobalt primary, Ochre as the one highlight.
 -- Follows `background`, so `:set background=dark|light` (or the terminal's appearance) switches mode.
+-- Set `vim.g.azulejo_brutalism_oled = true` before loading to swap Ink for true black in dark mode.
 
 local palettes = {
   light = {
@@ -58,12 +59,22 @@ local palettes = {
   },
 }
 
+-- OLED: Dark with true black behind everything; surfaces sink one step toward black.
+palettes.oled = vim.tbl_extend("force", palettes.dark, {
+  bg = "#000000",
+  bg_alt = "#07091F",
+  surface = "#0C1030",
+  on_primary = "#000000",
+  ansi = vim.list_extend({ "#0C1030" }, vim.list_slice(palettes.dark.ansi, 2)),
+})
+
 vim.cmd("highlight clear")
 if vim.fn.exists("syntax_on") == 1 then vim.cmd("syntax reset") end
 vim.g.colors_name = "azulejo-brutalism"
 vim.o.termguicolors = true
 
-local c = palettes[vim.o.background] or palettes.dark
+local mode = vim.o.background == "light" and "light" or (vim.g.azulejo_brutalism_oled and "oled" or "dark")
+local c = palettes[mode]
 
 for i, color in ipairs(c.ansi) do
   vim.g["terminal_color_" .. (i - 1)] = color

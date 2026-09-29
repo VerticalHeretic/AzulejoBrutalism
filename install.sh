@@ -2,12 +2,14 @@
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
 #   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains)
+#   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
 # (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
+DARK="Azulejo Brutalism Dark"
 
 say() { printf '\033[1;34m%s\033[0m %s\n' "$1" "$2"; }
 skip() { printf '\033[2m%s skipped: %s\033[0m\n' "$1" "$2"; }
@@ -21,7 +23,7 @@ install_noteplan() {
 
 install_ghostty() {
   local dir="$CONFIG/ghostty" config="$CONFIG/ghostty/config"
-  local line='theme = dark:"Azulejo Brutalism Dark",light:"Azulejo Brutalism Light"'
+  local line="theme = dark:\"$DARK\",light:\"Azulejo Brutalism Light\""
   [[ -d "$dir" ]] || { skip ghostty "$dir not found"; return; }
   mkdir -p "$dir/themes"
   cp "$REPO"/ghostty/Azulejo* "$dir/themes/"
@@ -44,7 +46,9 @@ install_herdr() {
   local new
   new="$(mktemp)"
   # Drop every existing [theme] / [theme.*] table, then put ours where the first one was (or at the end).
-  awk -v theme="$REPO/herdr/theme.toml" '
+  local src="$REPO/herdr/theme.toml"
+  [[ "$DARK" == *OLED ]] && src="$REPO/herdr/theme-oled.toml"
+  awk -v theme="$src" '
     function emit() { while ((getline l < theme) > 0) print l; placed = 1 }
     /^\[/ { in_theme = ($0 ~ /^\[theme(\]|\.)/); if (in_theme && !placed) emit() }
     !in_theme { print }
@@ -69,6 +73,9 @@ install_nvim() {
   if [[ -f "$dir/lazyvim.json" ]]; then
     mkdir -p "$dir/lua/plugins"
     cp "$REPO/nvim/lua/plugins/azulejo-brutalism.lua" "$dir/lua/plugins/"
+    if [[ "$DARK" == *OLED ]]; then
+      sed -i '' 's|^return {|vim.g.azulejo_brutalism_oled = true\n&|' "$dir/lua/plugins/azulejo-brutalism.lua"
+    fi
     say nvim "colorscheme installed and set as LazyVim's default"
   else
     say nvim "colorscheme installed; add 'colorscheme azulejo-brutalism' to your config"
@@ -77,7 +84,7 @@ install_nvim() {
 
 install_zed() {
   local dir="$CONFIG/zed" settings="$CONFIG/zed/settings.json"
-  local line='"theme": { "mode": "system", "light": "Azulejo Brutalism Light", "dark": "Azulejo Brutalism Dark" },'
+  local line="\"theme\": { \"mode\": \"system\", \"light\": \"Azulejo Brutalism Light\", \"dark\": \"$DARK\" },"
   [[ -d "$dir" ]] || { skip zed "$dir not found"; return; }
   mkdir -p "$dir/themes"
   cp "$REPO/zed/themes/azulejo-brutalism.json" "$dir/themes/"
@@ -116,7 +123,7 @@ install_xcode() {
     say xcode "themes installed; pick them in Settings → Themes (Light and Dark tabs)"
   else
     defaults write com.apple.dt.Xcode XCFontAndColorCurrentTheme "Azulejo Brutalism Light.xccolortheme"
-    defaults write com.apple.dt.Xcode XCFontAndColorCurrentDarkTheme "Azulejo Brutalism Dark.xccolortheme"
+    defaults write com.apple.dt.Xcode XCFontAndColorCurrentDarkTheme "$DARK.xccolortheme"
     say xcode "themes installed and set for Light and Dark"
   fi
 }
@@ -150,7 +157,10 @@ install_jetbrains() {
   say jetbrains "restart, then pick them in Settings → Editor → Color Scheme"
 }
 
-tools=("$@")
+tools=()
+for arg in "$@"; do
+  if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
+done
 [[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains)
 for tool in "${tools[@]}"; do
   case "$tool" in
