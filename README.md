@@ -31,6 +31,13 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 | -------------------------------------------- | ------------------------------------------ |
 | ![NotePlan Light](embeddings/noteplan-light.png) | ![NotePlan Dark](embeddings/noteplan-dark.png) |
 
+
+## Obsidian 
+
+| Light                                  | Dark                                 |
+| -------------------------------------- | ------------------------------------ |
+| ![Obsidian Light](https://github.com/user-attachments/assets/0753852c-f9ae-4c26-b4d2-41e55ebd8b47) | ![Obsidian Dark](https://github.com/user-attachments/assets/41b560a1-aa61-49dd-851f-fd1aabab4303) |
+
 ## Ghostty + Herdr
 
 | Light                                  | Dark                                 |
@@ -60,3 +67,4 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 | Light                                  | Dark                                 |
 | -------------------------------------- | ------------------------------------ |
 | ![Xcode Light](embeddings/xcode-light.png) | ![Xcode Dark](embeddings/xcode-dark.png) |
+
