@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Installs the Azulejo Brutalism themes.
+# Installs the Azulejo Brutalism extras (themes for apps other than Neovim; Neovim is a plugin, see README).
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
+#   ./install.sh zed ghostty     only the named tools (noteplan, ghostty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
 # (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
@@ -66,20 +66,7 @@ install_herdr() {
 }
 
 install_nvim() {
-  local dir="$CONFIG/nvim"
-  [[ -d "$dir" ]] || { skip nvim "$dir not found"; return; }
-  mkdir -p "$dir/colors"
-  cp "$REPO/nvim/colors/azulejo-brutalism.lua" "$dir/colors/"
-  if [[ -f "$dir/lazyvim.json" ]]; then
-    mkdir -p "$dir/lua/plugins"
-    cp "$REPO/nvim/lua/plugins/azulejo-brutalism.lua" "$dir/lua/plugins/"
-    if [[ "$DARK" == *OLED ]]; then
-      sed -i '' 's|^return {|vim.g.azulejo_brutalism_oled = true\n&|' "$dir/lua/plugins/azulejo-brutalism.lua"
-    fi
-    say nvim "colorscheme installed and set as LazyVim's default"
-  else
-    say nvim "colorscheme installed; add 'colorscheme azulejo-brutalism' to your config"
-  fi
+  skip nvim "Neovim is now a plugin; install it with your plugin manager (see README)"
 }
 
 install_zed() {
@@ -194,10 +181,10 @@ tools=()
 for arg in "$@"; do
   if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
 done
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains obsidian)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr zed fastfetch xcode vscode jetbrains obsidian)
 for tool in "${tools[@]}"; do
   case "$tool" in
     noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
   esac
 done
