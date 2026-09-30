@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism extras (themes for apps other than Neovim; Neovim is a plugin, see README).
 #   ./install.sh                 all tools
-#   ./install.sh zed ghostty     only the named tools (noteplan, ghostty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
+#   ./install.sh zed ghostty     only the named tools (noteplan, ghostty, kitty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
-# (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
+# (Ghostty, kitty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -37,6 +37,23 @@ install_ghostty() {
     fi
   fi
   say ghostty "themes installed and set; reload with ⌘⇧,"
+}
+
+install_kitty() {
+  local dir="$CONFIG/kitty" dark=dark mode src dest
+  [[ -d "$dir" ]] || { skip kitty "$dir not found"; return; }
+  [[ "$DARK" == *OLED ]] && dark=oled
+  mkdir -p "$dir/themes"
+  cp "$REPO"/extras/kitty/*.conf "$dir/themes/"
+  # kitty picks {light,dark}-theme.auto.conf from the OS appearance; no-preference is left alone.
+  for mode in light dark; do
+    src="$REPO/extras/kitty/azulejo-brutalism-light.conf"
+    [[ $mode == dark ]] && src="$REPO/extras/kitty/azulejo-brutalism-$dark.conf"
+    dest="$dir/$mode-theme.auto.conf"
+    if [[ -f "$dest" ]] && ! cmp -s "$src" "$dest"; then cp "$dest" "$dest.bak"; fi
+    cp "$src" "$dest"
+  done
+  say kitty "themes installed and set to follow the system appearance; restart kitty"
 }
 
 install_herdr() {
@@ -181,10 +198,10 @@ tools=()
 for arg in "$@"; do
   if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
 done
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr zed fastfetch xcode vscode jetbrains obsidian)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty kitty herdr zed fastfetch xcode vscode jetbrains obsidian)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
+    noteplan | ghostty | kitty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, kitty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
   esac
 done
