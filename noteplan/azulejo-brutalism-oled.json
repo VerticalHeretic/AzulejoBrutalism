@@ -6,7 +6,7 @@
   },
   "editor": {
     "backgroundColor": "#000000",
-    "altBackgroundColor": "#0C1030",
+    "altBackgroundColor": "#07091F",
     "tintColor": "#D49A1A",
     "tintColor2": "#D49A1A",
     "textColor": "#F3F0E8",
@@ -26,22 +26,27 @@
     "title1": {
       "font": "SFPro-ExpandedHeavy",
       "size": 28,
-      "color": "#F3F0E8"
+      "color": "#9FB2E4",
+      "underlineStyle": 2,
+      "underlineColor": "#1E2A9E"
     },
     "title2": {
       "font": "SFPro-ExpandedHeavy",
       "size": 22,
-      "color": "#F3F0E8"
+      "color": "#F3F0E8",
+      "underlineStyle": 1,
+      "underlineColor": "#1E2A9E"
     },
     "title3": {
       "font": "SFPro-ExpandedBold",
       "size": 18,
-      "color": "#F3F0E8"
+      "color": "#9FB2E4"
     },
     "title4": {
       "font": "SFPro-ExpandedBold",
-      "size": 16,
-      "color": "#F3F0E8"
+      "size": 14,
+      "color": "#A3A7C7",
+      "kern": 1.2
     },
     "title-mark1": {
       "font": "SFPro-ExpandedHeavy",
@@ -60,7 +65,7 @@
     },
     "title-mark4": {
       "font": "SFPro-ExpandedBold",
-      "size": 16,
+      "size": 14,
       "color": "#4CF3F0E8"
     },
     "bold": {
@@ -93,8 +98,8 @@
     "code": {
       "font": "Menlo-Regular",
       "size": 15,
-      "color": "#F3F0E8",
-      "backgroundColor": "#090C27",
+      "color": "#9FB2E4",
+      "backgroundColor": "#07091F",
       "borderRadius": 0,
       "inlineBorder": true,
       "horizontalMargin": 2,
@@ -110,7 +115,7 @@
     "todo": {
       "font": "noteplanstate",
       "size": 16,
-      "color": "#F3F0E8",
+      "color": "#9FB2E4",
       "headIndent": 33
     },
     "checked-todo-characters": {
@@ -119,20 +124,21 @@
       "headIndent": 33
     },
     "checked": {
-      "color": "#7CBF7A",
+      "color": "#A3A7C7",
+      "strikethroughStyle": 1,
       "headIndent": 33
     },
     "checked-canceled": {
       "regex": "(^\\h*[\\*\\-\\+]{1} |^\\h*[0-9]+[\\.\\)] )(\\[\\-\\] )(.*)",
       "matchPosition": 0,
-      "color": "#7A766C",
+      "color": "#6E7399",
       "strikethroughStyle": 1,
       "headIndent": 33
     },
     "checked-scheduled": {
       "regex": "(^\\h*[\\*\\-\\+]{1} |^\\h*[0-9]+[\\.\\)] )(\\[\\>\\] )(.*)",
       "matchPosition": 0,
-      "color": "#66F3F0E8",
+      "color": "#A3A7C7",
       "headIndent": 33
     },
     "working-on": {
@@ -157,25 +163,40 @@
     "quote-mark": {
       "font": "noteplanstate",
       "size": 16,
-      "color": "#F3F0E8",
+      "color": "#9FB2E4",
       "headIndent": 33
     },
     "quote-content": {
-      "color": "#CCF3F0E8",
-      "type": "italic",
+      "color": "#F3F0E8",
       "headIndent": 33
     },
-    "link": {},
-    "note-title-link": {},
-    "schedule-to-date-link": {},
-    "schedule-from-date-link": {},
+    "link": {
+      "color": "#9FB2E4",
+      "underlineStyle": 1,
+      "underlineColor": "#9FB2E4"
+    },
+    "note-title-link": {
+      "color": "#9FB2E4",
+      "underlineStyle": 1,
+      "underlineColor": "#9FB2E4"
+    },
+    "schedule-to-date-link": {
+      "color": "#9FB2E4",
+      "underlineStyle": 1,
+      "underlineColor": "#9FB2E4"
+    },
+    "schedule-from-date-link": {
+      "color": "#9FB2E4",
+      "underlineStyle": 1,
+      "underlineColor": "#9FB2E4"
+    },
     "done-date": {
       "color": "#66F3F0E8"
     },
     "phonenumber": {},
     "hashtag": {
-      "color": "#F3F0E8",
-      "backgroundColor": "#090C27",
+      "color": "#9FB2E4",
+      "backgroundColor": "#1E2A9E",
       "borderRadius": 0,
       "inlineBorder": true,
       "horizontalMargin": 2,
@@ -183,8 +204,8 @@
       "rightBorderPadding": 3
     },
     "attag": {
-      "color": "#F3F0E8",
-      "backgroundColor": "#090C27",
+      "color": "#9FB2E4",
+      "backgroundColor": "#1E2A9E",
       "borderRadius": 0,
       "inlineBorder": true,
       "horizontalMargin": 2,
@@ -192,8 +213,8 @@
       "rightBorderPadding": 3
     },
     "highlighted": {
-      "color": "#000000",
-      "backgroundColor": "#D49A1A"
+      "color": "#F3F0E8",
+      "backgroundColor": "#73D49A1A"
     },
     "highlighted-left-marker": {
       "color": "#4CF3F0E8"

@@ -26,22 +26,27 @@
     "title1": {
       "font": "SFPro-ExpandedHeavy",
       "size": 28,
-      "color": "#1E2A9E"
+      "color": "#1E2A9E",
+      "underlineStyle": 2,
+      "underlineColor": "#1E2A9E"
     },
     "title2": {
       "font": "SFPro-ExpandedHeavy",
       "size": 22,
-      "color": "#0C1030"
+      "color": "#0C1030",
+      "underlineStyle": 1,
+      "underlineColor": "#1E2A9E"
     },
     "title3": {
       "font": "SFPro-ExpandedBold",
       "size": 18,
-      "color": "#0C1030"
+      "color": "#1E2A9E"
     },
     "title4": {
       "font": "SFPro-ExpandedBold",
-      "size": 16,
-      "color": "#0C1030"
+      "size": 14,
+      "color": "#5A5E78",
+      "kern": 1.2
     },
     "title-mark1": {
       "font": "SFPro-ExpandedHeavy",
@@ -60,7 +65,7 @@
     },
     "title-mark4": {
       "font": "SFPro-ExpandedBold",
-      "size": 16,
+      "size": 14,
       "color": "#4C0C1030"
     },
     "bold": {
@@ -119,20 +124,21 @@
       "headIndent": 33
     },
     "checked": {
-      "color": "#2F6B3A",
+      "color": "#5A5E78",
+      "strikethroughStyle": 1,
       "headIndent": 33
     },
     "checked-canceled": {
       "regex": "(^\\h*[\\*\\-\\+]{1} |^\\h*[0-9]+[\\.\\)] )(\\[\\-\\] )(.*)",
       "matchPosition": 0,
-      "color": "#8C8778",
+      "color": "#8A8DA3",
       "strikethroughStyle": 1,
       "headIndent": 33
     },
     "checked-scheduled": {
       "regex": "(^\\h*[\\*\\-\\+]{1} |^\\h*[0-9]+[\\.\\)] )(\\[\\>\\] )(.*)",
       "matchPosition": 0,
-      "color": "#660C1030",
+      "color": "#5A5E78",
       "headIndent": 33
     },
     "working-on": {
@@ -161,14 +167,29 @@
       "headIndent": 33
     },
     "quote-content": {
-      "color": "#CC0C1030",
-      "type": "italic",
+      "color": "#0C1030",
       "headIndent": 33
     },
-    "link": {},
-    "note-title-link": {},
-    "schedule-to-date-link": {},
-    "schedule-from-date-link": {},
+    "link": {
+      "color": "#1E2A9E",
+      "underlineStyle": 1,
+      "underlineColor": "#1E2A9E"
+    },
+    "note-title-link": {
+      "color": "#1E2A9E",
+      "underlineStyle": 1,
+      "underlineColor": "#1E2A9E"
+    },
+    "schedule-to-date-link": {
+      "color": "#1E2A9E",
+      "underlineStyle": 1,
+      "underlineColor": "#1E2A9E"
+    },
+    "schedule-from-date-link": {
+      "color": "#1E2A9E",
+      "underlineStyle": 1,
+      "underlineColor": "#1E2A9E"
+    },
     "done-date": {
       "color": "#660C1030"
     },
@@ -193,7 +214,7 @@
     },
     "highlighted": {
       "color": "#0C1030",
-      "backgroundColor": "#D49A1A"
+      "backgroundColor": "#73D49A1A"
     },
     "highlighted-left-marker": {
       "color": "#4C0C1030"
