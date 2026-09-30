@@ -6,11 +6,11 @@ Color scheme/theme for different tools, created by love for Brutalism and Azulej
 
 ```sh
 ./install.sh                 # all tools
-./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains
+./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian
 ./install.sh --oled          # true-black OLED variant instead of Dark
 ```
 
-**OLED** is Dark with a pure `#000000` background and near-black surfaces; accents are unchanged. With `--oled` the script sets it as the dark theme in Ghostty, Herdr, Zed, Xcode and Neovim (via `vim.g.azulejo_brutalism_oled = true`). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
+**OLED** is Dark with a pure `#000000` background and near-black surfaces; accents are unchanged. With `--oled` the script sets it as the dark theme in Ghostty, Herdr, Zed, Xcode, Neovim (via `vim.g.azulejo_brutalism_oled = true`) and Obsidian (via the `azulejo-brutalism-oled` CSS snippet). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 
@@ -22,40 +22,41 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 - **Fastfetch:** run `fastfetch`; the tile uses the terminal's blue and yellow.
 - **Xcode:** set automatically if Xcode is closed; otherwise pick them in Settings → Themes.
 - **VS Code / Cursor:** restart, then choose Azulejo Brutalism Light/Dark as the preferred light and dark themes.
+- **Obsidian:** installed into every vault Obsidian knows about, and set if Obsidian is closed; otherwise pick it in Settings → Appearance → Themes. For OLED, turn on the `azulejo-brutalism-oled` CSS snippet.
 - **Android Studio / JetBrains:** restart, then pick the scheme in Settings → Editor → Color Scheme (or import the `.icls` from `jetbrains/`).
 
 ## NotePlan
 
 | Light                                        | Dark                                       |
 | -------------------------------------------- | ------------------------------------------ |
-| ![NotePlan Light](images/noteplan-light.png) | ![NotePlan Dark](images/noteplan-dark.png) |
+| ![NotePlan Light](embeddings/noteplan-light.png) | ![NotePlan Dark](embeddings/noteplan-dark.png) |
 
 ## Ghostty + Herdr
 
 | Light                                  | Dark                                 |
 | -------------------------------------- | ------------------------------------ |
-| ![Herdr Light](images/herdr-light.png) | ![Herdr Dark](images/herdr-dark.png) |
+| ![Herdr Light](embeddings/herdr-light.png) | ![Herdr Dark](embeddings/herdr-dark.png) |
 
 ## Neovim
 
 | Light                                  | Dark                                 |
 | -------------------------------------- | ------------------------------------ |
-| ![Neovim Light](images/nvim-light.png) | ![Neovim Dark](images/nvim-dark.png) |
+| ![Neovim Light](embeddings/nvim-light.png) | ![Neovim Dark](embeddings/nvim-dark.png) |
 
 ## Zed
 
 | Light                              | Dark                             |
 | ---------------------------------- | -------------------------------- |
-| ![Zed Light](images/zed-light.png) | ![Zed Dark](images/zed-dark.png) |
+| ![Zed Light](embeddings/zed-light.png) | ![Zed Dark](embeddings/zed-dark.png) |
 
 ## Fastfetch
 
 | Light                                          | Dark                                         |
 | ---------------------------------------------- | -------------------------------------------- |
-| ![Fastfetch Light](images/fastfetch-light.png) | ![fastfetch Dark](images/fastfetch-dark.png) |
+| ![Fastfetch Light](embeddings/fastfetch-light.png) | ![fastfetch Dark](embeddings/fastfetch-dark.png) |
 
 ## Xcode
 
 | Light                                  | Dark                                 |
 | -------------------------------------- | ------------------------------------ |
-| ![Xcode Light](images/xcode-light.png) | ![Xcode Dark](images/xcode-dark.png) |
+| ![Xcode Light](embeddings/xcode-light.png) | ![Xcode Dark](embeddings/xcode-dark.png) |

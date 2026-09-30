@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains)
+#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
 # (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
@@ -157,14 +157,47 @@ install_jetbrains() {
   say jetbrains "restart, then pick them in Settings → Editor → Color Scheme"
 }
 
+install_obsidian() {
+  local registry="$HOME/Library/Application Support/obsidian/obsidian.json" found=0 vault
+  [[ -f "$registry" ]] || { skip obsidian "no Obsidian vaults found"; return; }
+  # Every vault Obsidian knows about; themes and snippets are per vault.
+  while IFS= read -r vault; do
+    [[ -d "$vault/.obsidian" ]] || continue
+    local theme="$vault/.obsidian/themes/Azulejo Brutalism" appearance="$vault/.obsidian/appearance.json"
+    mkdir -p "$theme" "$vault/.obsidian/snippets"
+    cp "$REPO/obsidian/manifest.json" "$REPO/obsidian/theme.css" "$theme/"
+    cp "$REPO/obsidian/snippets/azulejo-brutalism-oled.css" "$vault/.obsidian/snippets/"
+    found=1
+    # Obsidian rewrites appearance.json while open, so only switch themes while it is closed.
+    if pgrep -x Obsidian >/dev/null; then
+      say obsidian "theme installed in $vault; pick it in Settings → Appearance → Themes"
+      continue
+    fi
+    [[ -f "$appearance" ]] || echo '{}' >"$appearance"
+    cp "$appearance" "$appearance.bak"
+    plutil -replace cssTheme -string "Azulejo Brutalism" "$appearance"
+    if [[ "$DARK" == *OLED ]]; then
+      plutil -extract enabledCssSnippets json -o /dev/null "$appearance" 2>/dev/null ||
+        plutil -replace enabledCssSnippets -json '[]' "$appearance"
+      grep -qF '"azulejo-brutalism-oled"' "$appearance" ||
+        plutil -insert enabledCssSnippets -json '"azulejo-brutalism-oled"' -append "$appearance"
+    else
+      # plutil has left the file on one line, so the entry can be cut out textually.
+      sed -i '' -e 's/"azulejo-brutalism-oled",\{0,1\}//' -e 's/,]/]/' "$appearance"
+    fi
+    say obsidian "theme installed and set in $vault"
+  done < <(grep -o '"path":"[^"]*"' "$registry" | sed 's/^"path":"//; s/"$//')
+  [[ $found -eq 1 ]] || skip obsidian "no Obsidian vaults found"
+}
+
 tools=()
 for arg in "$@"; do
   if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
 done
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains obsidian)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains)" >&2; exit 1 ;;
+    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
   esac
 done
