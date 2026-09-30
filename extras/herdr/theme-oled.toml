@@ -1,0 +1,48 @@
+[theme]
+name = "terminal"
+auto_switch = true
+light_name = "terminal"
+dark_name = "terminal"
+
+[theme.custom]
+panel_bg = "reset"
+
+[theme.custom.light]
+text = "#0C1030"          # ink
+subtext0 = "#3D4163"      # secondary rows (branch names)
+overlay1 = "#5A5E78"      # inactive rows
+overlay0 = "#6E7290"      # section labels, hints
+surface0 = "#DEDAD0"
+surface1 = "#D2CEC3"
+surface_dim = "#E8E4D9"
+sidebar_bg = "#E8E4D9"    # darker glaze, as in NotePlan
+active_row_bg = "#D6DAE7" # wash tile
+selection_bg = "#9FB2E4"  # wash
+accent = "#1E2A9E"        # cobalt
+blue = "#1E2A9E"
+green = "#2F6B3A"
+yellow = "#B07A0C"
+red = "#B03A2E"
+mauve = "#6B2E80"
+teal = "#1D6E7E"
+peach = "#C0661C"
+
+[theme.custom.dark]
+text = "#F3F0E8"          # glaze
+subtext0 = "#C9CBE0"
+overlay1 = "#A3A7C7"
+overlay0 = "#8A8FB5"
+surface0 = "#0C1030"
+surface1 = "#151B45"
+surface_dim = "#07091F"
+sidebar_bg = "#07091F"
+active_row_bg = "#1E2A9E" # cobalt tile
+selection_bg = "#2E3CB8"
+accent = "#9FB2E4"        # wash (cobalt vanishes on ink)
+blue = "#9FB2E4"
+green = "#7CBF7A"
+yellow = "#D49A1A"
+red = "#E0705A"
+mauve = "#C08AD6"
+teal = "#6FC3CF"
+peach = "#E8914A"

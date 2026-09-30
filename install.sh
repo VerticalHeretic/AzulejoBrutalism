@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Installs the Azulejo Brutalism themes.
+# Installs the Azulejo Brutalism extras (themes for apps other than Neovim; Neovim is a plugin, see README).
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
+#   ./install.sh zed ghostty     only the named tools (noteplan, ghostty, kitty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
-# (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
+# (Ghostty, kitty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -17,7 +17,7 @@ skip() { printf '\033[2m%s skipped: %s\033[0m\n' "$1" "$2"; }
 install_noteplan() {
   local dest="$HOME/Library/Containers/co.noteplan.NotePlan3/Data/Library/Application Support/co.noteplan.NotePlan3/Themes"
   [[ -d "$dest" ]] || { skip noteplan "NotePlan themes folder not found"; return; }
-  cp "$REPO"/noteplan/*.json "$dest/"
+  cp "$REPO"/extras/noteplan/*.json "$dest/"
   say noteplan "themes copied; pick them in NotePlan → Settings → Themes"
 }
 
@@ -26,7 +26,7 @@ install_ghostty() {
   local line="theme = dark:\"$DARK\",light:\"Azulejo Brutalism Light\""
   [[ -d "$dir" ]] || { skip ghostty "$dir not found"; return; }
   mkdir -p "$dir/themes"
-  cp "$REPO"/ghostty/Azulejo* "$dir/themes/"
+  cp "$REPO"/extras/ghostty/Azulejo* "$dir/themes/"
   touch "$config"
   if ! grep -qxF "$line" "$config"; then
     cp "$config" "$config.bak"
@@ -39,6 +39,23 @@ install_ghostty() {
   say ghostty "themes installed and set; reload with ⌘⇧,"
 }
 
+install_kitty() {
+  local dir="$CONFIG/kitty" dark=dark mode src dest
+  [[ -d "$dir" ]] || { skip kitty "$dir not found"; return; }
+  [[ "$DARK" == *OLED ]] && dark=oled
+  mkdir -p "$dir/themes"
+  cp "$REPO"/extras/kitty/*.conf "$dir/themes/"
+  # kitty picks {light,dark}-theme.auto.conf from the OS appearance; no-preference is left alone.
+  for mode in light dark; do
+    src="$REPO/extras/kitty/azulejo-brutalism-light.conf"
+    [[ $mode == dark ]] && src="$REPO/extras/kitty/azulejo-brutalism-$dark.conf"
+    dest="$dir/$mode-theme.auto.conf"
+    if [[ -f "$dest" ]] && ! cmp -s "$src" "$dest"; then cp "$dest" "$dest.bak"; fi
+    cp "$src" "$dest"
+  done
+  say kitty "themes installed and set to follow the system appearance; restart kitty"
+}
+
 install_herdr() {
   local config="$CONFIG/herdr/config.toml"
   command -v herdr >/dev/null || { skip herdr "herdr not installed"; return; }
@@ -46,8 +63,8 @@ install_herdr() {
   local new
   new="$(mktemp)"
   # Drop every existing [theme] / [theme.*] table, then put ours where the first one was (or at the end).
-  local src="$REPO/herdr/theme.toml"
-  [[ "$DARK" == *OLED ]] && src="$REPO/herdr/theme-oled.toml"
+  local src="$REPO/extras/herdr/theme.toml"
+  [[ "$DARK" == *OLED ]] && src="$REPO/extras/herdr/theme-oled.toml"
   awk -v theme="$src" '
     function emit() { while ((getline l < theme) > 0) print l; placed = 1 }
     /^\[/ { in_theme = ($0 ~ /^\[theme(\]|\.)/); if (in_theme && !placed) emit() }
@@ -66,20 +83,7 @@ install_herdr() {
 }
 
 install_nvim() {
-  local dir="$CONFIG/nvim"
-  [[ -d "$dir" ]] || { skip nvim "$dir not found"; return; }
-  mkdir -p "$dir/colors"
-  cp "$REPO/nvim/colors/azulejo-brutalism.lua" "$dir/colors/"
-  if [[ -f "$dir/lazyvim.json" ]]; then
-    mkdir -p "$dir/lua/plugins"
-    cp "$REPO/nvim/lua/plugins/azulejo-brutalism.lua" "$dir/lua/plugins/"
-    if [[ "$DARK" == *OLED ]]; then
-      sed -i '' 's|^return {|vim.g.azulejo_brutalism_oled = true\n&|' "$dir/lua/plugins/azulejo-brutalism.lua"
-    fi
-    say nvim "colorscheme installed and set as LazyVim's default"
-  else
-    say nvim "colorscheme installed; add 'colorscheme azulejo-brutalism' to your config"
-  fi
+  skip nvim "Neovim is now a plugin; install it with your plugin manager (see README)"
 }
 
 install_zed() {
@@ -87,7 +91,7 @@ install_zed() {
   local line="\"theme\": { \"mode\": \"system\", \"light\": \"Azulejo Brutalism Light\", \"dark\": \"$DARK\" },"
   [[ -d "$dir" ]] || { skip zed "$dir not found"; return; }
   mkdir -p "$dir/themes"
-  cp "$REPO/zed/themes/azulejo-brutalism.json" "$dir/themes/"
+  cp "$REPO/extras/zed/themes/azulejo-brutalism.json" "$dir/themes/"
   # settings.json is JSONC, so only a one-line "theme" entry is rewritten; anything else is left to you.
   if grep -qF "$line" "$settings" 2>/dev/null; then
     :
@@ -105,11 +109,11 @@ install_fastfetch() {
   local dir="$CONFIG/fastfetch"
   command -v fastfetch >/dev/null || { skip fastfetch "fastfetch not installed"; return; }
   mkdir -p "$dir"
-  cp "$REPO/fastfetch/azulejo.txt" "$dir/"
-  if [[ -f "$dir/config.jsonc" ]] && ! cmp -s "$REPO/fastfetch/config.jsonc" "$dir/config.jsonc"; then
+  cp "$REPO/extras/fastfetch/azulejo.txt" "$dir/"
+  if [[ -f "$dir/config.jsonc" ]] && ! cmp -s "$REPO/extras/fastfetch/config.jsonc" "$dir/config.jsonc"; then
     cp "$dir/config.jsonc" "$dir/config.jsonc.bak"
   fi
-  cp "$REPO/fastfetch/config.jsonc" "$dir/"
+  cp "$REPO/extras/fastfetch/config.jsonc" "$dir/"
   say fastfetch "logo and config installed; run fastfetch"
 }
 
@@ -117,7 +121,7 @@ install_xcode() {
   local dir="$HOME/Library/Developer/Xcode/UserData/FontAndColorThemes"
   [[ -d "$HOME/Library/Developer/Xcode" ]] || { skip xcode "Xcode user data not found"; return; }
   mkdir -p "$dir"
-  cp "$REPO"/xcode/*.xccolortheme "$dir/"
+  cp "$REPO"/extras/xcode/*.xccolortheme "$dir/"
   # Xcode rewrites its preferences on quit, so only switch themes while it is closed.
   if pgrep -x Xcode >/dev/null; then
     say xcode "themes installed; pick them in Settings → Themes (Light and Dark tabs)"
@@ -133,7 +137,7 @@ install_vscode() {
   for dir in "$HOME/.vscode/extensions" "$HOME/.cursor/extensions"; do
     [[ -d "$dir" ]] || continue
     rm -rf "${dir:?}/$name"
-    cp -R "$REPO/vscode" "$dir/$name"
+    cp -R "$REPO/extras/vscode" "$dir/$name"
     found=1
     say vscode "extension installed in $dir"
   done
@@ -148,7 +152,7 @@ install_jetbrains() {
   for dir in "$HOME/Library/Application Support/Google/AndroidStudio"* "$HOME/Library/Application Support/JetBrains/"*/; do
     [[ -d "$dir" ]] || continue
     mkdir -p "$dir/colors"
-    cp "$REPO"/jetbrains/*.icls "$dir/colors/"
+    cp "$REPO"/extras/jetbrains/*.icls "$dir/colors/"
     found=1
     say jetbrains "schemes installed in ${dir%/}"
   done
@@ -165,8 +169,8 @@ install_obsidian() {
     [[ -d "$vault/.obsidian" ]] || continue
     local theme="$vault/.obsidian/themes/Azulejo Brutalism" appearance="$vault/.obsidian/appearance.json"
     mkdir -p "$theme" "$vault/.obsidian/snippets"
-    cp "$REPO/obsidian/manifest.json" "$REPO/obsidian/theme.css" "$theme/"
-    cp "$REPO/obsidian/snippets/azulejo-brutalism-oled.css" "$vault/.obsidian/snippets/"
+    cp "$REPO/extras/obsidian/manifest.json" "$REPO/extras/obsidian/theme.css" "$theme/"
+    cp "$REPO/extras/obsidian/snippets/azulejo-brutalism-oled.css" "$vault/.obsidian/snippets/"
     found=1
     # Obsidian rewrites appearance.json while open, so only switch themes while it is closed.
     if pgrep -x Obsidian >/dev/null; then
@@ -194,10 +198,10 @@ tools=()
 for arg in "$@"; do
   if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
 done
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains obsidian)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty kitty herdr zed fastfetch xcode vscode jetbrains obsidian)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
+    noteplan | ghostty | kitty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, kitty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
   esac
 done

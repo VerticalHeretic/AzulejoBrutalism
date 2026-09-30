@@ -1,0 +1,33 @@
+{
+  "name": "azulejo-brutalism",
+  "displayName": "Azulejo Brutalism",
+  "description": "Cobalt, Ink, Glaze and Ochre. Portuguese tiles as structure, not decoration.",
+  "version": "0.1.0",
+  "publisher": "verticalheretic",
+  "engines": {
+    "vscode": "^1.70.0"
+  },
+  "categories": [
+    "Themes"
+  ],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Azulejo Brutalism Light",
+        "uiTheme": "vs",
+        "path": "./themes/azulejo-brutalism-light.json"
+      },
+      {
+        "label": "Azulejo Brutalism Dark",
+        "uiTheme": "vs-dark",
+        "path": "./themes/azulejo-brutalism-dark.json"
+      },
+      {
+        "label": "Azulejo Brutalism OLED",
+        "uiTheme": "vs-dark",
+        "path": "./themes/azulejo-brutalism-oled.json"
+      }
+    ]
+  },
+  "license": "MIT"
+}
