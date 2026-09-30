@@ -283,20 +283,12 @@
   background: var(--azulejo-frieze) repeat-x left center / 16px 16px;
 }
 
-/* Headings: a heavy uppercase title on a thick rule, sections on a thinner one, small labels below. */
+/* Headings: a heavy uppercase title, small uppercase labels below. */
 .inline-title,
 .markdown-rendered h1,
 .markdown-source-view.mod-cm6 .cm-line.HyperMD-header-1 {
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  padding-bottom: 0.15em;
-  border-bottom: 4px solid var(--azulejo-rule);
-}
-
-.markdown-rendered h2,
-.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2 {
-  padding-bottom: 0.1em;
-  border-bottom: 2px solid var(--azulejo-rule);
 }
 
 .markdown-rendered :is(h4, h5, h6),

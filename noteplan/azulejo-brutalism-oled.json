@@ -26,16 +26,12 @@
     "title1": {
       "font": "SFPro-ExpandedHeavy",
       "size": 28,
-      "color": "#9FB2E4",
-      "underlineStyle": 2,
-      "underlineColor": "#1E2A9E"
+      "color": "#9FB2E4"
     },
     "title2": {
       "font": "SFPro-ExpandedHeavy",
       "size": 22,
-      "color": "#F3F0E8",
-      "underlineStyle": 1,
-      "underlineColor": "#1E2A9E"
+      "color": "#F3F0E8"
     },
     "title3": {
       "font": "SFPro-ExpandedBold",
