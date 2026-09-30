@@ -76,17 +76,18 @@ Themes for other apps live in [`extras/`](extras). Install them with the script:
 
 ```sh
 ./install.sh                 # all tools
-./install.sh zed ghostty     # only some: noteplan, ghostty, kitty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian
+./install.sh zed ghostty     # only some: noteplan, ghostty, kitty, opencode, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian
 ./install.sh --oled          # true-black OLED variant instead of Dark
 ```
 
-With `--oled` the script sets OLED as the dark theme in Ghostty, kitty, Herdr, Zed, Xcode and Obsidian (via the `azulejo-brutalism-oled` CSS snippet). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
+With `--oled` the script sets OLED as the dark theme in Ghostty, kitty, OpenCode, Herdr, Zed, Xcode and Obsidian (via the `azulejo-brutalism-oled` CSS snippet). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 
 - **NotePlan:** choose the Light and Dark themes in Settings → Themes.
 - **Ghostty:** reload the config with ⌘⇧,
 - **kitty:** restart kitty; it follows the system appearance via `light-theme.auto.conf` / `dark-theme.auto.conf`. The themes are also listed in `kitten themes`, or `include` a `.conf` from `extras/kitty/` yourself.
+- **OpenCode:** restart it. `azulejo-brutalism` (or `azulejo-brutalism-oled`) follows the terminal's light/dark appearance; pick it with `/themes` or set `"theme": { "name": "azulejo-brutalism" }` in `~/.config/opencode/cli.json`.
 - **Herdr:** the script reloads it for you.
 - **Zed:** switches right away and follows the system appearance.
 - **Fastfetch:** run `fastfetch`; the tile uses the terminal's blue and yellow.

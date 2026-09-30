@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism extras (themes for apps other than Neovim; Neovim is a plugin, see README).
 #   ./install.sh                 all tools
-#   ./install.sh zed ghostty     only the named tools (noteplan, ghostty, kitty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
+#   ./install.sh zed ghostty     only the named tools (noteplan, ghostty, kitty, opencode, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
-# (Ghostty, kitty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
+# (Ghostty, kitty, OpenCode, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -54,6 +54,26 @@ install_kitty() {
     cp "$src" "$dest"
   done
   say kitty "themes installed and set to follow the system appearance; restart kitty"
+}
+
+install_opencode() {
+  local dir="$CONFIG/opencode" name=azulejo-brutalism
+  command -v opencode >/dev/null || { skip opencode "opencode not installed"; return; }
+  [[ "$DARK" == *OLED ]] && name=azulejo-brutalism-oled
+  mkdir -p "$dir/themes"
+  cp "$REPO"/extras/opencode/*.json "$dir/themes/"
+  if [[ ! -f "$dir/cli.json" ]]; then
+    printf '{\n  "$schema": "https://opencode.ai/v2/cli.json",\n  "theme": { "name": "%s" }\n}\n' "$name" >"$dir/cli.json"
+    say opencode "theme $name installed and set; restart opencode"
+    return
+  fi
+  cp "$dir/cli.json" "$dir/cli.json.bak"
+  # plutil can edit an existing "theme" object in place but cannot create one.
+  if plutil -replace theme.name -string "$name" "$dir/cli.json" 2>/dev/null; then
+    say opencode "theme $name installed and set; restart opencode"
+  else
+    say opencode "theme installed; set \"theme\": { \"name\": \"$name\" } in $dir/cli.json"
+  fi
 }
 
 install_herdr() {
@@ -198,10 +218,10 @@ tools=()
 for arg in "$@"; do
   if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
 done
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty kitty herdr zed fastfetch xcode vscode jetbrains obsidian)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty kitty opencode herdr zed fastfetch xcode vscode jetbrains obsidian)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | kitty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, kitty, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
+    noteplan | ghostty | kitty | opencode | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, kitty, opencode, herdr, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
   esac
 done
