@@ -162,15 +162,17 @@ install_obsidian() {
   [[ -f "$registry" ]] || { skip obsidian "no Obsidian vaults found"; return; }
   # The theme is a submodule (its own repo, for the Obsidian community directory); fetch it on a plain clone.
   [[ -f "$REPO/obsidian/theme.css" ]] || git -C "$REPO" submodule update --init obsidian
-  # Every vault Obsidian knows about; themes and snippets are per vault.
+  # Every vault Obsidian knows about; themes and plugin settings are per vault.
   while IFS= read -r vault; do
     [[ -d "$vault/.obsidian" ]] || continue
     local theme="$vault/.obsidian/themes/Azulejo Brutalism" appearance="$vault/.obsidian/appearance.json"
-    mkdir -p "$theme" "$vault/.obsidian/snippets"
+    local styles="$vault/.obsidian/plugins/obsidian-style-settings"
+    mkdir -p "$theme"
     cp "$REPO/obsidian/manifest.json" "$REPO/obsidian/theme.css" "$theme/"
-    cp "$REPO"/obsidian/snippets/*.css "$vault/.obsidian/snippets/"
+    # The options used to ship as CSS snippets; they are Style Settings toggles in the theme now.
+    rm -f "$vault"/.obsidian/snippets/azulejo-brutalism-{oled,uppercase,heading-rules}.css
     found=1
-    # Obsidian rewrites appearance.json while open, so only switch themes while it is closed.
+    # Obsidian rewrites appearance.json and plugin data while open, so only change them while it is closed.
     if pgrep -x Obsidian >/dev/null; then
       say obsidian "theme installed in $vault; pick it in Settings → Appearance → Themes"
       continue
@@ -178,14 +180,18 @@ install_obsidian() {
     [[ -f "$appearance" ]] || echo '{}' >"$appearance"
     cp "$appearance" "$appearance.bak"
     plutil -replace cssTheme -string "Azulejo Brutalism" "$appearance"
-    if [[ "$DARK" == *OLED ]]; then
-      plutil -extract enabledCssSnippets json -o /dev/null "$appearance" 2>/dev/null ||
-        plutil -replace enabledCssSnippets -json '[]' "$appearance"
-      grep -qF '"azulejo-brutalism-oled"' "$appearance" ||
-        plutil -insert enabledCssSnippets -json '"azulejo-brutalism-oled"' -append "$appearance"
-    else
-      # plutil has left the file on one line, so the entry can be cut out textually.
-      sed -i '' -e 's/"azulejo-brutalism-oled",\{0,1\}//' -e 's/,]/]/' "$appearance"
+    # plutil has left the file on one line, so the old snippet entry can be cut out textually.
+    sed -i '' -e 's/"azulejo-brutalism-oled",\{0,1\}//' -e 's/,]/]/' "$appearance"
+    # Style Settings saves each toggle as "<section id>@@<setting id>"; OLED is the theme's azulejo-oled toggle.
+    if [[ -d "$styles" ]]; then
+      [[ -f "$styles/data.json" ]] || echo '{}' >"$styles/data.json"
+      if [[ "$DARK" == *OLED ]]; then
+        plutil -replace 'azulejo-brutalism@@azulejo-oled' -bool true "$styles/data.json"
+      else
+        plutil -remove 'azulejo-brutalism@@azulejo-oled' "$styles/data.json" 2>/dev/null || true
+      fi
+    elif [[ "$DARK" == *OLED ]]; then
+      skip "obsidian OLED" "install the Style Settings plugin in $vault, then turn on OLED dark there"
     fi
     say obsidian "theme installed and set in $vault"
   done < <(grep -o '"path":"[^"]*"' "$registry" | sed 's/^"path":"//; s/"$//')

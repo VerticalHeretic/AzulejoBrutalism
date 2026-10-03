@@ -10,7 +10,7 @@ Color scheme/theme for different tools, created by love for Brutalism and Azulej
 ./install.sh --oled          # true-black OLED variant instead of Dark
 ```
 
-**OLED** is Dark with a pure `#000000` background and near-black surfaces; accents are unchanged. With `--oled` the script sets it as the dark theme in Ghostty, Herdr, Zed, Xcode, Neovim (via `vim.g.azulejo_brutalism_oled = true`) and Obsidian (via the `azulejo-brutalism-oled` CSS snippet). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
+**OLED** is Dark with a pure `#000000` background and near-black surfaces; accents are unchanged. With `--oled` the script sets it as the dark theme in Ghostty, Herdr, Zed, Xcode, Neovim (via `vim.g.azulejo_brutalism_oled = true`) and Obsidian (via the theme's OLED dark toggle in the Style Settings plugin). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 
@@ -22,7 +22,7 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 - **Fastfetch:** run `fastfetch`; the tile uses the terminal's blue and yellow.
 - **Xcode:** set automatically if Xcode is closed; otherwise pick them in Settings → Themes.
 - **VS Code / Cursor:** restart, then choose Azulejo Brutalism Light/Dark as the preferred light and dark themes.
-- **Obsidian:** installed into every vault Obsidian knows about, and set if Obsidian is closed; otherwise pick it in Settings → Appearance → Themes. For OLED, turn on the `azulejo-brutalism-oled` CSS snippet. Or install it from the community themes (Settings → Appearance → Themes → Manage); the theme lives in [azulejo-brutalism-obsidian](https://github.com/VerticalHeretic/azulejo-brutalism-obsidian), a submodule here.
+- **Obsidian:** installed into every vault Obsidian knows about, and set if Obsidian is closed; otherwise pick it in Settings → Appearance → Themes. Its options (OLED dark, uppercase labels, heading rules) are in the Style Settings plugin. Or install it from the community themes (Settings → Appearance → Themes → Manage); the theme lives in [azulejo-brutalism-obsidian](https://github.com/VerticalHeretic/azulejo-brutalism-obsidian), a submodule here.
 - **Android Studio / JetBrains:** restart, then pick the scheme in Settings → Editor → Color Scheme (or import the `.icls` from `jetbrains/`).
 
 ## NotePlan
