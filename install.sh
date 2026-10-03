@@ -160,6 +160,8 @@ install_jetbrains() {
 install_obsidian() {
   local registry="$HOME/Library/Application Support/obsidian/obsidian.json" found=0 vault
   [[ -f "$registry" ]] || { skip obsidian "no Obsidian vaults found"; return; }
+  # The theme is a submodule (its own repo, for the Obsidian community directory); fetch it on a plain clone.
+  [[ -f "$REPO/obsidian/theme.css" ]] || git -C "$REPO" submodule update --init obsidian
   # Every vault Obsidian knows about; themes and snippets are per vault.
   while IFS= read -r vault; do
     [[ -d "$vault/.obsidian" ]] || continue

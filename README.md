@@ -22,7 +22,7 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 - **Fastfetch:** run `fastfetch`; the tile uses the terminal's blue and yellow.
 - **Xcode:** set automatically if Xcode is closed; otherwise pick them in Settings → Themes.
 - **VS Code / Cursor:** restart, then choose Azulejo Brutalism Light/Dark as the preferred light and dark themes.
-- **Obsidian:** installed into every vault Obsidian knows about, and set if Obsidian is closed; otherwise pick it in Settings → Appearance → Themes. For OLED, turn on the `azulejo-brutalism-oled` CSS snippet.
+- **Obsidian:** installed into every vault Obsidian knows about, and set if Obsidian is closed; otherwise pick it in Settings → Appearance → Themes. For OLED, turn on the `azulejo-brutalism-oled` CSS snippet. Or install it from the community themes (Settings → Appearance → Themes → Manage); the theme lives in [azulejo-brutalism-obsidian](https://github.com/VerticalHeretic/azulejo-brutalism-obsidian), a submodule here.
 - **Android Studio / JetBrains:** restart, then pick the scheme in Settings → Editor → Color Scheme (or import the `.icls` from `jetbrains/`).
 
 ## NotePlan
@@ -32,7 +32,9 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 | ![NotePlan Light](embeddings/noteplan-light.png) | ![NotePlan Dark](embeddings/noteplan-dark.png) |
 
 
-## Obsidian 
+## Obsidian
+
+Source and options (OLED, uppercase labels, heading rules via Style Settings): [azulejo-brutalism-obsidian](https://github.com/VerticalHeretic/azulejo-brutalism-obsidian).
 
 | Light                                  | Dark                                 |
 | -------------------------------------- | ------------------------------------ |
