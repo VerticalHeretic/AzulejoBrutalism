@@ -1,0 +1,7 @@
+/* Azulejo Brutalism uppercase: H1, H4–H6, table headers, callout titles and the status bar in capitals.
+   Enable in Settings → Appearance → CSS snippets, with the Azulejo Brutalism theme active. */
+
+.theme-light,
+.theme-dark {
+  --azulejo-case: uppercase;
+}

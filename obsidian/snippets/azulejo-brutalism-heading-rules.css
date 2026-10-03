@@ -1,0 +1,15 @@
+/* Azulejo Brutalism heading rules: a thick rule under the title and H1, a thinner one under H2.
+   Enable in Settings → Appearance → CSS snippets, with the Azulejo Brutalism theme active. */
+
+.inline-title,
+.markdown-rendered h1,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-1 {
+  padding-bottom: 0.15em;
+  border-bottom: 4px solid var(--azulejo-rule);
+}
+
+.markdown-rendered h2,
+.markdown-source-view.mod-cm6 .cm-line.HyperMD-header-2 {
+  padding-bottom: 0.1em;
+  border-bottom: 2px solid var(--azulejo-rule);
+}

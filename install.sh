@@ -166,7 +166,7 @@ install_obsidian() {
     local theme="$vault/.obsidian/themes/Azulejo Brutalism" appearance="$vault/.obsidian/appearance.json"
     mkdir -p "$theme" "$vault/.obsidian/snippets"
     cp "$REPO/obsidian/manifest.json" "$REPO/obsidian/theme.css" "$theme/"
-    cp "$REPO/obsidian/snippets/azulejo-brutalism-oled.css" "$vault/.obsidian/snippets/"
+    cp "$REPO"/obsidian/snippets/*.css "$vault/.obsidian/snippets/"
     found=1
     # Obsidian rewrites appearance.json while open, so only switch themes while it is closed.
     if pgrep -x Obsidian >/dev/null; then

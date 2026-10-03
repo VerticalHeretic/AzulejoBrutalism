@@ -30,6 +30,9 @@
   --tab-curve: 0;
   --status-bar-radius: 0;
 
+  /* Labels keep their typed case; the azulejo-brutalism-uppercase snippet sets this to uppercase. */
+  --azulejo-case: none;
+
   /* Structure. */
   --border-width: 1px;
   --blockquote-border-thickness: 4px;
@@ -283,17 +286,17 @@
   background: var(--azulejo-frieze) repeat-x left center / 16px 16px;
 }
 
-/* Headings: a heavy uppercase title, small uppercase labels below. */
+/* Headings: a heavy title, small labels below. Uppercase and heading rules are opt-in snippets. */
 .inline-title,
 .markdown-rendered h1,
 .markdown-source-view.mod-cm6 .cm-line.HyperMD-header-1 {
-  text-transform: uppercase;
+  text-transform: var(--azulejo-case);
   letter-spacing: -0.01em;
 }
 
 .markdown-rendered :is(h4, h5, h6),
 .markdown-source-view.mod-cm6 .cm-line:is(.HyperMD-header-4, .HyperMD-header-5, .HyperMD-header-6) {
-  text-transform: uppercase;
+  text-transform: var(--azulejo-case);
   letter-spacing: 0.08em;
 }
 
@@ -321,13 +324,13 @@
 }
 
 .markdown-rendered th {
-  text-transform: uppercase;
+  text-transform: var(--azulejo-case);
   letter-spacing: 0.06em;
   font-size: 0.85em;
 }
 
 .callout-title {
-  text-transform: uppercase;
+  text-transform: var(--azulejo-case);
   letter-spacing: 0.06em;
   font-size: 0.9em;
 }
@@ -407,7 +410,7 @@
 /* Status bar reads like a stamped label. */
 .status-bar {
   font-family: var(--font-monospace);
-  text-transform: uppercase;
+  text-transform: var(--azulejo-case);
   letter-spacing: 0.04em;
 }
 
@@ -438,6 +441,109 @@ button.mod-cta {
 }
 
 button.mod-cta:active {
+  box-shadow: none;
+  transform: translate(3px, 3px);
+}
+
+/* Phone and tablet. Obsidian's mobile chrome rounds itself with its own touch radii and floats frosted-glass
+   controls (the .mod-raised ones); square them all and make the floating ones tiles with a hard shadow,
+   so they match the desktop instead of mixing pills and squares. */
+.is-mobile.theme-light,
+.is-mobile.theme-dark {
+  --touch-radius-xxs: 0;
+  --touch-radius-xs: 0;
+  --touch-radius-s: 0;
+  --touch-radius-m: 0;
+  --touch-radius-l: 0;
+  --touch-radius-xl: 0;
+  --clickable-icon-radius: 0;
+  --input-radius: 0;
+  --textarea-radius: 0;
+  --modal-radius: 0;
+  --nav-item-radius: 0;
+  --navbar-radius: 0;
+  --setting-items-radius: 0;
+  --view-header-action-radius: 0;
+  --embed-actions-radius: 0;
+  --embed-action-radius: 0;
+  --canvas-controls-radius: 0;
+  --metadata-border-radius: 0;
+  --swatch-radius: 0;
+  --toggle-radius: 0;
+  --toggle-thumb-radius: 0;
+  --radius-xl: 0;
+
+  --raised-background: var(--background-primary);
+  --raised-blur: none;
+  --raised-shadow: var(--shadow-s);
+  --raised-mask-display: none;
+}
+
+.is-mobile .mod-raised,
+.is-mobile.is-floating-nav .mod-raised {
+  border: 2px solid var(--azulejo-rule);
+}
+
+/* Some mobile controls hard-code a pill instead of reading a radius variable. */
+.mobile-navbar-action .clickable-icon,
+.mobile-navbar-action button,
+.is-phone .prompt-input-container,
+.is-phone .prompt-input-container .prompt-input[type="text"],
+.mobile-toolbar-options-list-container,
+.mobile-toolbar-options-list,
+.mobile-toolbar-floating-options {
+  border-radius: 0;
+}
+
+/* The search field's tile already draws the outline. */
+.is-phone .prompt-input-container .prompt-input[type="text"] {
+  border: none;
+}
+
+/* Full-screen sheets meet the screen edge: a frame or shadow there just outlines the phone. */
+.is-phone .prompt {
+  border-width: 2px 0 0;
+  box-shadow: none;
+}
+
+.is-phone .modal.mod-lg,
+.is-phone .modal.mod-sidebar-layout {
+  border: none;
+  box-shadow: none;
+}
+
+/* On the phone the note header floats over the text; give it a solid band so the frieze sits on something,
+   leave a gap between the buttons' shadows and the frieze, and start the note below it. */
+.is-phone .workspace-leaf-content[data-type="markdown"] .view-header {
+  padding-bottom: var(--size-4-2);
+  background-color: var(--background-primary);
+}
+
+/* With the floating nav Obsidian clears the status bar with a margin, which leaves the text showing under the clock;
+   use padding so the band runs up behind it. */
+.is-mobile.is-floating-nav.is-phone .workspace-leaf-content[data-type="markdown"] .view-header {
+  margin-top: 0;
+  padding-top: var(--view-header-top-offset);
+  background-color: var(--background-primary);
+}
+
+.is-phone .mod-root .workspace-leaf-content[data-type="markdown"] {
+  --view-top-spacing-markdown: calc(var(--size-4-2) + 26px);
+}
+
+.is-phone.is-floating-nav .mod-root .workspace-leaf-content[data-type="markdown"],
+.is-phone.auto-full-screen .mod-root .workspace-leaf-content[data-type="markdown"] {
+  --view-top-spacing-markdown: calc(var(--safe-area-inset-top) + var(--view-header-height) + 16px + 26px);
+}
+
+/* New-tab actions are buttons like the primary ones: a framed tile that presses into its shadow. */
+.is-mobile .empty-state-action {
+  border: 2px solid var(--azulejo-rule);
+  background-color: var(--background-primary);
+  box-shadow: var(--shadow-s);
+}
+
+.is-mobile .empty-state-action.mobile-tap {
   box-shadow: none;
   transform: translate(3px, 3px);
 }
