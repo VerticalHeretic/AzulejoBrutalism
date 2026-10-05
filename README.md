@@ -36,10 +36,6 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 
 Source and options (OLED, uppercase labels, heading rules via Style Settings): [azulejo-brutalism-obsidian](https://github.com/VerticalHeretic/azulejo-brutalism-obsidian).
 
-| Light                                  | Dark                                 |
-| -------------------------------------- | ------------------------------------ |
-| ![Obsidian Light](https://github.com/user-attachments/assets/0753852c-f9ae-4c26-b4d2-41e55ebd8b47) | ![Obsidian Dark](https://github.com/user-attachments/assets/41b560a1-aa61-49dd-851f-fd1aabab4303) |
-
 ## Ghostty + Herdr
 
 | Light                                  | Dark                                 |
