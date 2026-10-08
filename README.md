@@ -6,11 +6,11 @@ Color scheme/theme for different tools, created by love for Brutalism and Azulej
 
 ```sh
 ./install.sh                 # all tools
-./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian
+./install.sh nvim ghostty    # only some: noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian, vibe
 ./install.sh --oled          # true-black OLED variant instead of Dark
 ```
 
-**OLED** is Dark with a pure `#000000` background and near-black surfaces; accents are unchanged. With `--oled` the script sets it as the dark theme in Ghostty, Herdr, Zed, Xcode, Neovim (via `vim.g.azulejo_brutalism_oled = true`) and Obsidian (via the theme's OLED dark toggle in the Style Settings plugin). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
+**OLED** is Dark with a pure `#000000` background and near-black surfaces; accents are unchanged. With `--oled` the script sets it as the dark theme in Ghostty, Herdr, Zed, Xcode, Neovim (via `vim.g.azulejo_brutalism_oled = true`), Vibe (via `theme` in `~/.vibe/config.toml`) and Obsidian (via the theme's OLED dark toggle in the Style Settings plugin). In NotePlan, VS Code and JetBrains, pick "Azulejo Brutalism OLED" yourself.
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 
@@ -24,6 +24,7 @@ Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 - **VS Code / Cursor:** restart, then choose Azulejo Brutalism Light/Dark as the preferred light and dark themes.
 - **Obsidian:** installed into every vault Obsidian knows about, and set if Obsidian is closed; otherwise pick it in Settings → Appearance → Themes. Its options (OLED dark, uppercase labels, heading rules) are in the Style Settings plugin. Or install it from the community themes (Settings → Appearance → Themes → Manage); the theme lives in [azulejo-brutalism-obsidian](https://github.com/VerticalHeretic/azulejo-brutalism-obsidian), a submodule here.
 - **Android Studio / JetBrains:** restart, then pick the scheme in Settings → Editor → Color Scheme (or import the `.icls` from `jetbrains/`).
+- **Mistral Vibe:** installed into Vibe's Python environment (`azulejo_brutalism.py` plus a `.pth` startup hook) and set as `theme` in `~/.vibe/config.toml`. Vibe's TUI is Textual, which has no theme-file format — the hook registers the themes as if they were built-in, so all three variants (light/dark/oled) also appear in Vibe's `/theme` picker. Restart vibe to see it; Python (Textual) TUI only, not the experimental Rust TUI. Uninstall: remove the two `azulejo_brutalism*` files from the `site-packages` shown by the installer. Reinstalling or upgrading mistral-vibe replaces its environment — re-run the script after.
 
 ## NotePlan
 

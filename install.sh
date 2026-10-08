@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian)
+#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, vibe)
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
-# (Ghostty, Herdr, Zed, Fastfetch) are backed up next to themselves as <file>.bak first.
+# (Ghostty, Herdr, Zed, Fastfetch, Vibe) are backed up next to themselves as <file>.bak first.
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -157,55 +157,52 @@ install_jetbrains() {
   say jetbrains "restart, then pick them in Settings → Editor → Color Scheme"
 }
 
-install_obsidian() {
-  local registry="$HOME/Library/Application Support/obsidian/obsidian.json" found=0 vault
-  [[ -f "$registry" ]] || { skip obsidian "no Obsidian vaults found"; return; }
-  # The theme is a submodule (its own repo, for the Obsidian community directory); fetch it on a plain clone.
-  [[ -f "$REPO/obsidian/theme.css" ]] || git -C "$REPO" submodule update --init obsidian
-  # Every vault Obsidian knows about; themes and plugin settings are per vault.
-  while IFS= read -r vault; do
-    [[ -d "$vault/.obsidian" ]] || continue
-    local theme="$vault/.obsidian/themes/Azulejo Brutalism" appearance="$vault/.obsidian/appearance.json"
-    local styles="$vault/.obsidian/plugins/obsidian-style-settings"
-    mkdir -p "$theme"
-    cp "$REPO/obsidian/manifest.json" "$REPO/obsidian/theme.css" "$theme/"
-    # The options used to ship as CSS snippets; they are Style Settings toggles in the theme now.
-    rm -f "$vault"/.obsidian/snippets/azulejo-brutalism-{oled,uppercase,heading-rules}.css
-    found=1
-    # Obsidian rewrites appearance.json and plugin data while open, so only change them while it is closed.
-    if pgrep -x Obsidian >/dev/null; then
-      say obsidian "theme installed in $vault; pick it in Settings → Appearance → Themes"
-      continue
+install_vibe() {
+  # Vibe has no theme-file format: the TUI is Textual, which only accepts its
+  # BUILTIN_THEMES. So the theme module is installed into Vibe's Python
+  # environment with a .pth hook that registers the themes at startup; they
+  # then behave like built-ins (config `theme`, /theme picker).
+  command -v vibe >/dev/null || { skip vibe "vibe not installed"; return; }
+  local site="" exe bin
+  # uv/pipx/etc. launchers point their shebang at the venv python; walk up to its site-packages.
+  if exe="$(command -v vibe)"; then
+    bin="$(sed -n '1s|^#!||p' "$exe")"
+    [[ -x "$bin" ]] && for site in "$(dirname "$(dirname "$bin")")"/lib/python*/site-packages; do
+      [[ -d "$site" ]] && break
+    done
+  fi
+  if [[ -z "$site" || ! -d "$site" ]]; then
+    for site in "$HOME/.local/share/uv/tools/mistral-vibe"/lib/python*/site-packages "$HOME/.local/pipx/venvs/mistral-vibe"/lib/python*/site-packages; do
+      [[ -d "$site" ]] && break
+    done
+  fi
+  [[ -n "$site" && -d "$site" ]] || { skip vibe "could not find Vibe's site-packages (unsupported install method?)"; return; }
+  cp "$REPO/vibe/azulejo_brutalism.py" "$site/"
+  printf 'import azulejo_brutalism\n' >"$site/azulejo-brutalism.pth"
+  # All three variants (light/dark/oled) are registered; --oled picks the dark one to set.
+  local theme="azulejo-brutalism-dark"
+  [[ "$DARK" == *OLED ]] && theme="azulejo-brutalism-oled"
+  local config="$HOME/.vibe/config.toml" line="theme = \"$theme\""
+  mkdir -p "$HOME/.vibe" && touch "$config"
+  if ! grep -qxF "$line" "$config"; then
+    cp "$config" "$config.bak"
+    if grep -q '^theme *=' "$config"; then
+      sed -i '' "s|^theme *=.*|$line|" "$config"
+    else
+      printf '%s\n' "$line" >>"$config"
     fi
-    [[ -f "$appearance" ]] || echo '{}' >"$appearance"
-    cp "$appearance" "$appearance.bak"
-    plutil -replace cssTheme -string "Azulejo Brutalism" "$appearance"
-    # plutil has left the file on one line, so the old snippet entry can be cut out textually.
-    sed -i '' -e 's/"azulejo-brutalism-oled",\{0,1\}//' -e 's/,]/]/' "$appearance"
-    # Style Settings saves each toggle as "<section id>@@<setting id>"; OLED is the theme's azulejo-oled toggle.
-    if [[ -d "$styles" ]]; then
-      [[ -f "$styles/data.json" ]] || echo '{}' >"$styles/data.json"
-      if [[ "$DARK" == *OLED ]]; then
-        plutil -replace 'azulejo-brutalism@@azulejo-oled' -bool true "$styles/data.json"
-      else
-        plutil -remove 'azulejo-brutalism@@azulejo-oled' "$styles/data.json" 2>/dev/null || true
-      fi
-    elif [[ "$DARK" == *OLED ]]; then
-      skip "obsidian OLED" "install the Style Settings plugin in $vault, then turn on OLED dark there"
-    fi
-    say obsidian "theme installed and set in $vault"
-  done < <(grep -o '"path":"[^"]*"' "$registry" | sed 's/^"path":"//; s/"$//')
-  [[ $found -eq 1 ]] || skip obsidian "no Obsidian vaults found"
+  fi
+  say vibe "themes installed into $site; $line set in $config — restart vibe, or pick a variant in /theme"
 }
 
 tools=()
 for arg in "$@"; do
   if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
 done
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains obsidian)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains vibe)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | obsidian) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, obsidian)" >&2; exit 1 ;;
+    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | vibe) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, vibe)" >&2; exit 1 ;;
   esac
 done
