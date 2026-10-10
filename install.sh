@@ -224,7 +224,8 @@ install_vibe() {
   if ! grep -qxF "$line" "$config"; then
     cp "$config" "$config.bak"
     if grep -q '^theme *=' "$config"; then
-      sed -i '' "s|^theme *=.*|$line|" "$config"
+      # Portable in-place edit: `sed -i ''` is BSD-only and fails on GNU sed.
+      sed "s|^theme *=.*|$line|" "$config" >"$config.tmp" && mv "$config.tmp" "$config"
     else
       printf '%s\n' "$line" >>"$config"
     fi
