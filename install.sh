@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, vibe)
+#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, noctalia, vibe)
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
 # (Ghostty, Herdr, Zed, Fastfetch, Vibe) are backed up next to themselves as <file>.bak first.
@@ -157,6 +157,43 @@ install_jetbrains() {
   say jetbrains "restart, then pick them in Settings → Editor → Color Scheme"
 }
 
+install_noctalia() {
+  command -v noctalia >/dev/null || { skip noctalia "noctalia not installed"; return; }
+  local dir="$CONFIG/noctalia" config="$CONFIG/noctalia/config.toml"
+  mkdir -p "$dir/palettes"
+  cp "$REPO"/noctalia/*.json "$dir/palettes/"
+  # Upsert source/custom_palette/pure_black_dark inside [theme], leaving the
+  # rest of the config alone (same mktemp pattern as herdr).
+  local new oled
+  oled=false
+  if [[ "$DARK" == *OLED ]]; then oled=true; fi
+  new="$(mktemp)"
+  awk -v oled="$oled" '
+    function flush() {
+      if (!done_src) print "source = \"custom\""
+      if (!done_pal) print "custom_palette = \"Azulejo Brutalism\""
+      if (!done_oled) print "pure_black_dark = " oled
+      done_src = done_pal = done_oled = 1
+    }
+    BEGIN { in_theme = 0; have_theme = 0; done_src = 0; done_pal = 0; done_oled = 0 }
+    /^\[theme\]/ { if (in_theme) flush(); in_theme = 1; have_theme = 1; print; next }
+    /^\[/ { if (in_theme) flush(); in_theme = 0; print; next }
+    in_theme && /^source[ \t]*=/ { print "source = \"custom\""; done_src = 1; next }
+    in_theme && /^custom_palette[ \t]*=/ { print "custom_palette = \"Azulejo Brutalism\""; done_pal = 1; next }
+    in_theme && /^pure_black_dark[ \t]*=/ { print "pure_black_dark = " oled; done_oled = 1; next }
+    { print }
+    END { if (in_theme) flush(); else if (!have_theme) { print ""; print "[theme]"; flush() } }
+  ' "$config" >"$new"
+  if cmp -s "$new" "$config"; then
+    rm "$new"
+  else
+    cp "$config" "$config.bak"
+    mv "$new" "$config"
+  fi
+  noctalia config validate >/dev/null 2>&1 || { skip noctalia "resulting config failed validation"; return; }
+  say noctalia "palette installed and set as theme source in $config — applies live"
+}
+
 install_vibe() {
   # Vibe has no theme-file format: the TUI is Textual, which only accepts its
   # BUILTIN_THEMES. So the theme module is installed into Vibe's Python
@@ -199,10 +236,10 @@ tools=()
 for arg in "$@"; do
   if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
 done
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains vibe)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains noctalia vibe)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | vibe) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, vibe)" >&2; exit 1 ;;
+    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | noctalia | vibe) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, noctalia, vibe)" >&2; exit 1 ;;
   esac
 done
