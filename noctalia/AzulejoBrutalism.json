@@ -2,7 +2,7 @@
   "dark": {
     "mPrimary": "#9FB2E4",
     "mOnPrimary": "#0C1030",
-    "mSecondary": "#7CBF7A",
+    "mSecondary": "#D49A1A",
     "mOnSecondary": "#0C1030",
     "mTertiary": "#C08AD6",
     "mOnTertiary": "#0C1030",
@@ -48,7 +48,7 @@
   "light": {
     "mPrimary": "#1E2A9E",
     "mOnPrimary": "#F3F0E8",
-    "mSecondary": "#2F6B3A",
+    "mSecondary": "#8F6200",
     "mOnSecondary": "#F3F0E8",
     "mTertiary": "#6B2E80",
     "mOnTertiary": "#F3F0E8",
