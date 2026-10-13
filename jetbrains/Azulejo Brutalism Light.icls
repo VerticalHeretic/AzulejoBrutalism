@@ -4,6 +4,10 @@
     <property name="ide">AI</property>
     <property name="originalScheme">Azulejo Brutalism Light</property>
   </metaInfo>
+  <option name="LINE_SPACING" value="1.2" />
+  <option name="EDITOR_FONT_SIZE" value="14" />
+  <option name="EDITOR_FONT_NAME" value="JetBrains Mono" />
+  <option name="EDITOR_LIGATURES" value="false" />
   <colors>
     <option name="CARET_COLOR" value="D49A1A" />
     <option name="CARET_ROW_COLOR" value="E8E4D9" />

@@ -14,6 +14,8 @@ Color scheme/theme for different tools, created by love for Brutalism and Azulej
 
 Re-run after editing a theme. Edited configs are backed up as `*.bak`.
 
+**Font:** the themes use [JetBrains Mono](https://www.jetbrains.com/lp/mono/) (Nerd Font build, so Neovim and Vibe icons render in the terminal). Install it first with `brew install --cask font-jetbrains-mono-nerd-font`. The script sets it in Ghostty (`font-family`, plus `adjust-cell-height = 10%`), Zed (`buffer_font_family`/`ui_font_family`, rewritten only when already present on one line), Xcode (baked into the themes, line spacing 1.25), JetBrains IDEs (baked into the schemes, size 14, line spacing 1.2, ligatures off) and NotePlan code blocks. Your font size is left alone everywhere; change `FONT` at the top of `install.sh` to use something else.
+
 - **NotePlan:** choose the Light and Dark themes in Settings → Themes.
 - **Ghostty:** reload the config with ⌘⇧,
 - **Herdr:** the script reloads it for you.

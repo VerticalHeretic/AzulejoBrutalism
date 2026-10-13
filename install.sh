@@ -5,14 +5,29 @@
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
 # (Ghostty, Herdr, Zed, Fastfetch, Vibe) are backed up next to themselves as <file>.bak first.
+# Font: JetBrains Mono is set wherever the tool stores it (Ghostty, Zed, Xcode, JetBrains, NotePlan code).
+# Install it first: brew install --cask font-jetbrains-mono-nerd-font
 set -euo pipefail
 
 REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}"
 DARK="Azulejo Brutalism Dark"
+FONT="JetBrainsMono Nerd Font"   # wide, open letterforms; Nerd Font build so Neovim/Vibe icons render in the terminal
 
 say() { printf '\033[1;34m%s\033[0m %s\n' "$1" "$2"; }
 skip() { printf '\033[2m%s skipped: %s\033[0m\n' "$1" "$2"; }
+
+# set_kv FILE KEY VALUE: rewrite a "key = value" line, or append it. Backs up FILE once per run.
+set_kv() {
+  local file="$1" key="$2" line="$2 = $3"
+  grep -qxF "$line" "$file" && return
+  [[ -f "$file.bak" && "$file.bak" -nt "$file" ]] || cp "$file" "$file.bak"
+  if grep -q "^$key *=" "$file"; then
+    sed "s|^$key *=.*|$line|" "$file" >"$file.tmp" && mv "$file.tmp" "$file"
+  else
+    printf '%s\n' "$line" >>"$file"
+  fi
+}
 
 install_noteplan() {
   local dest="$HOME/Library/Containers/co.noteplan.NotePlan3/Data/Library/Application Support/co.noteplan.NotePlan3/Themes"
@@ -23,20 +38,14 @@ install_noteplan() {
 
 install_ghostty() {
   local dir="$CONFIG/ghostty" config="$CONFIG/ghostty/config"
-  local line="theme = dark:\"$DARK\",light:\"Azulejo Brutalism Light\""
   [[ -d "$dir" ]] || { skip ghostty "$dir not found"; return; }
   mkdir -p "$dir/themes"
   cp "$REPO"/ghostty/Azulejo* "$dir/themes/"
   touch "$config"
-  if ! grep -qxF "$line" "$config"; then
-    cp "$config" "$config.bak"
-    if grep -q '^theme *=' "$config"; then
-      sed -i '' "s|^theme *=.*|$line|" "$config"
-    else
-      printf '%s\n' "$line" >>"$config"
-    fi
-  fi
-  say ghostty "themes installed and set; reload with ⌘⇧,"
+  set_kv "$config" theme "dark:\"$DARK\",light:\"Azulejo Brutalism Light\""
+  set_kv "$config" font-family "\"$FONT\""
+  set_kv "$config" adjust-cell-height "10%"
+  say ghostty "themes installed and set, font set to $FONT; reload with ⌘⇧,"
 }
 
 install_herdr() {
@@ -96,9 +105,30 @@ install_zed() {
     sed -i '' -E "s|^([[:space:]]*)\"theme\": *(\{[^{}]*\}\|\"[^\"]*\"),?[[:space:]]*\$|\1$line|" "$settings"
   else
     say zed "theme installed; set it with: $line"
+    zed_font "$settings"
     return
   fi
   say zed "theme installed and set (follows system appearance)"
+  zed_font "$settings"
+}
+
+# Rewrite one-line "buffer_font_family"/"ui_font_family" entries; if neither exists, say how to add them.
+zed_font() {
+  local settings="$1" key changed=0 missing=0
+  for key in buffer_font_family ui_font_family; do
+    if grep -qE "^\s*\"$key\": *\"$FONT\",?\s*$" "$settings" 2>/dev/null; then
+      :
+    elif grep -qE "^\s*\"$key\": *\"[^\"]*\",?\s*$" "$settings" 2>/dev/null; then
+      [[ -f "$settings.bak" && "$settings.bak" -nt "$settings" ]] || cp "$settings" "$settings.bak"
+      sed -E "s|^([[:space:]]*)\"$key\": *\"[^\"]*\"|\1\"$key\": \"$FONT\"|" "$settings" >"$settings.tmp" && mv "$settings.tmp" "$settings"
+      changed=1
+    else
+      missing=1
+    fi
+  done
+  [[ $changed -eq 1 ]] && say zed "font set to $FONT"
+  [[ $missing -eq 1 ]] && say zed "to use the font, add: \"buffer_font_family\": \"$FONT\", \"ui_font_family\": \"$FONT\","
+  return 0
 }
 
 install_fastfetch() {
@@ -219,17 +249,9 @@ install_vibe() {
   # All three variants (light/dark/oled) are registered; --oled picks the dark one to set.
   local theme="azulejo-brutalism-dark"
   [[ "$DARK" == *OLED ]] && theme="azulejo-brutalism-oled"
-  local config="$HOME/.vibe/config.toml" line="theme = \"$theme\""
+  local config="$HOME/.vibe/config.toml"
   mkdir -p "$HOME/.vibe" && touch "$config"
-  if ! grep -qxF "$line" "$config"; then
-    cp "$config" "$config.bak"
-    if grep -q '^theme *=' "$config"; then
-      # Portable in-place edit: `sed -i ''` is BSD-only and fails on GNU sed.
-      sed "s|^theme *=.*|$line|" "$config" >"$config.tmp" && mv "$config.tmp" "$config"
-    else
-      printf '%s\n' "$line" >>"$config"
-    fi
-  fi
+  set_kv "$config" theme "\"$theme\""
   say vibe "themes installed into $site; $line set in $config — restart vibe, or pick a variant in /theme"
 }
 

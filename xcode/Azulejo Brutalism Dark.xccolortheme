@@ -33,7 +33,7 @@
 	<key>DVTFontSizeModifier</key>
 	<integer>5</integer>
 	<key>DVTLineSpacing</key>
-	<real>1.100000023841858</real>
+	<real>1.25</real>
 	<key>DVTMarkupTextBackgroundColor</key>
 	<string>0.062745 0.082353 0.290196 1</string>
 	<key>DVTMarkupTextBorderColor</key>
@@ -109,7 +109,7 @@
 		<key>xcode.syntax.comment.doc.keyword</key>
 		<string>0.788235 0.796078 0.878431 1</string>
 		<key>xcode.syntax.declaration.other</key>
-		<string>0.952941 0.941176 0.909804 1</string>
+		<string>0.949020 0.937255 0.909804 1</string>
 		<key>xcode.syntax.declaration.type</key>
 		<string>0.752941 0.541176 0.839216 1</string>
 		<key>xcode.syntax.identifier.class</key>
@@ -121,9 +121,9 @@
 		<key>xcode.syntax.identifier.constant.system</key>
 		<string>0.831373 0.603922 0.101961 1</string>
 		<key>xcode.syntax.identifier.function</key>
-		<string>0.952941 0.941176 0.909804 1</string>
+		<string>0.431373 0.764706 0.811765 1</string>
 		<key>xcode.syntax.identifier.function.system</key>
-		<string>0.435294 0.764706 0.811765 1</string>
+		<string>0.431373 0.764706 0.811765 1</string>
 		<key>xcode.syntax.identifier.macro</key>
 		<string>0.752941 0.541176 0.839216 1</string>
 		<key>xcode.syntax.identifier.macro.system</key>
@@ -133,9 +133,9 @@
 		<key>xcode.syntax.identifier.type.system</key>
 		<string>0.752941 0.541176 0.839216 1</string>
 		<key>xcode.syntax.identifier.variable</key>
-		<string>0.952941 0.941176 0.909804 1</string>
+		<string>0.949020 0.937255 0.909804 1</string>
 		<key>xcode.syntax.identifier.variable.system</key>
-		<string>0.435294 0.764706 0.811765 1</string>
+		<string>0.431373 0.764706 0.811765 1</string>
 		<key>xcode.syntax.keyword</key>
 		<string>0.623529 0.698039 0.894118 1</string>
 		<key>xcode.syntax.mark</key>
@@ -145,7 +145,7 @@
 		<key>xcode.syntax.number</key>
 		<string>0.831373 0.603922 0.101961 1</string>
 		<key>xcode.syntax.plain</key>
-		<string>0.952941 0.941176 0.909804 1</string>
+		<string>0.784314 0.792157 0.874510 1</string>
 		<key>xcode.syntax.preprocessor</key>
 		<string>0.752941 0.541176 0.839216 1</string>
 		<key>xcode.syntax.regex</key>
@@ -166,69 +166,69 @@
 	<key>DVTSourceTextSyntaxFonts</key>
 	<dict>
 		<key>xcode.syntax.attribute</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.character</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.comment</key>
-		<string>ZedMonoNFM-MediumItalic - 19.0</string>
+		<string>JetBrainsMono-MediumItalic - 19.0</string>
 		<key>xcode.syntax.comment.doc</key>
-		<string>ZedMonoNFM-MediumItalic - 19.0</string>
+		<string>JetBrainsMono-MediumItalic - 19.0</string>
 		<key>xcode.syntax.comment.doc.keyword</key>
-		<string>ZedMonoNFM-MediumItalic - 19.0</string>
+		<string>JetBrainsMono-MediumItalic - 19.0</string>
 		<key>xcode.syntax.declaration.other</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Bold - 19.0</string>
 		<key>xcode.syntax.declaration.type</key>
-		<string>ZedMonoNFM-Bold - 19.0</string>
+		<string>JetBrainsMono-Bold - 19.0</string>
 		<key>xcode.syntax.identifier.class</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.class.system</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.constant</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.constant.system</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.function</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.function.system</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.macro</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.macro.system</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.type</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.type.system</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.variable</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.identifier.variable.system</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.keyword</key>
-		<string>ZedMonoNFM-Bold - 19.0</string>
+		<string>JetBrainsMono-Bold - 19.0</string>
 		<key>xcode.syntax.mark</key>
-		<string>ZedMonoNFM-Bold - 19.0</string>
+		<string>JetBrainsMono-Bold - 19.0</string>
 		<key>xcode.syntax.markup.code</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.number</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.plain</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.preprocessor</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.regex</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.regex.capturename</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.regex.charname</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.regex.number</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.regex.other</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.string</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 		<key>xcode.syntax.url</key>
-		<string>ZedMonoNFM-Medium - 19.0</string>
+		<string>JetBrainsMono-Medium - 19.0</string>
 	</dict>
 </dict>
 </plist>
