@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Installs the Azulejo Brutalism themes.
 #   ./install.sh                 all tools
-#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, noctalia, vibe)
+#   ./install.sh nvim ghostty    only the named tools (noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, noctalia, vibe, helix, mitos)
 #   ./install.sh --oled ...      use the true-black OLED variant wherever Dark would be set
 # Theme files are copied, so re-run after editing them here. Config files that get edited
 # (Ghostty, Herdr, Zed, Fastfetch, Vibe) are backed up next to themselves as <file>.bak first.
@@ -224,6 +224,65 @@ install_noctalia() {
   say noctalia "palette installed and set as theme source in $config — applies live"
 }
 
+install_helix() {
+  local dir="$CONFIG/helix"
+  local config="$dir/config.toml"
+  [[ -d "$dir" ]] || { skip helix "$dir not found"; return; }
+  mkdir -p "$dir/themes"
+  cp "$REPO"/helix/*.toml "$dir/themes/"
+  # Helix has no light/dark auto-switch, so follow the macOS appearance; --oled forces the true-black variant.
+  local theme="azulejo-brutalism-dark"
+  if [[ "$DARK" == *OLED ]]; then
+    theme="azulejo-brutalism-oled"
+  elif [[ "$(defaults read -g AppleInterfaceStyle 2>/dev/null || true)" != "Dark" ]]; then
+    theme="azulejo-brutalism-light"
+  fi
+  local line="theme = \"$theme\""
+  touch "$config"
+  if ! grep -qxF "$line" "$config"; then
+    cp "$config" "$config.bak"
+    if grep -q '^theme *=' "$config"; then
+      sed -i '' "s|^theme *=.*|$line|" "$config"
+    else
+      printf '%s\n' "$line" >>"$config"
+    fi
+  fi
+  say helix "themes copied to $dir/themes; $line set in $config — switch anytime with :theme azulejo-brutalism-light|dark|oled"
+}
+
+install_mitos() {
+  local dir="$CONFIG/mitos"
+  local config="$dir/config.toml"
+  command -v mitos >/dev/null || [[ -d "$dir" ]] || { skip mitos "mitos not installed"; return; }
+  mkdir -p "$dir/themes"
+  cp "$REPO"/mitos/*.toml "$dir/themes/"
+  # Mitos follows the terminal's light/dark report (mode 2031), so both variants go into a [theme] table.
+  # Drop any existing top-level `theme =` key and [theme]/[theme.*] tables, then put ours where the first one was.
+  local dark="azulejo-brutalism-dark"
+  [[ "$DARK" == *OLED ]] && dark="azulejo-brutalism-oled"
+  touch "$config"
+  local new
+  new="$(mktemp)"
+  awk -v dark="$dark" '
+    function emit() {
+      print "[theme]"
+      print "dark = \"" dark "\""
+      print "light = \"azulejo-brutalism-light\""
+      placed = 1
+    }
+    /^\[/ { in_theme = ($0 ~ /^\[theme(\]|\.)/); if (in_theme && !placed) emit() }
+    !in_theme && $0 !~ /^theme[ \t]*=/ { print }
+    END { if (!placed) { print ""; emit() } }
+  ' "$config" >"$new"
+  if cmp -s "$new" "$config"; then
+    rm "$new"
+  else
+    cp "$config" "$config.bak"
+    mv "$new" "$config"
+  fi
+  say mitos "themes copied to $dir/themes; [theme] table set in $config — switch anytime with :theme azulejo-brutalism-light|dark|oled"
+}
+
 install_vibe() {
   # Vibe has no theme-file format: the TUI is Textual, which only accepts its
   # BUILTIN_THEMES. So the theme module is installed into Vibe's Python
@@ -259,10 +318,10 @@ tools=()
 for arg in "$@"; do
   if [[ "$arg" == --oled ]]; then DARK="Azulejo Brutalism OLED"; else tools+=("$arg"); fi
 done
-[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains noctalia vibe)
+[[ ${#tools[@]} -eq 0 ]] && tools=(noteplan ghostty herdr nvim zed fastfetch xcode vscode jetbrains noctalia vibe helix mitos)
 for tool in "${tools[@]}"; do
   case "$tool" in
-    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | noctalia | vibe) "install_$tool" ;;
-    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, noctalia, vibe)" >&2; exit 1 ;;
+    noteplan | ghostty | herdr | nvim | zed | fastfetch | xcode | vscode | jetbrains | noctalia | vibe | helix | mitos) "install_$tool" ;;
+    *) echo "unknown tool: $tool (expected noteplan, ghostty, herdr, nvim, zed, fastfetch, xcode, vscode, jetbrains, noctalia, vibe, helix, mitos)" >&2; exit 1 ;;
   esac
 done

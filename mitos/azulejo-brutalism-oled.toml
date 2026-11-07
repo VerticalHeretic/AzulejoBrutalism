@@ -1,0 +1,177 @@
+# Azulejo Brutalism OLED — Dark with a true #000000 background and near-black surfaces; accents unchanged.
+# Install: copy to ~/.config/mitos/themes/ and add to ~/.config/mitos/config.toml:
+# [theme]
+# light = "azulejo-brutalism-light"
+# dark = "azulejo-brutalism-oled"
+# or run ./install.sh --oled mitos from the repo.
+
+# Syntax highlighting
+# -------------------
+"comment" = { fg = "muted", modifiers = ["italic"] }
+
+"keyword" = { fg = "primary", modifiers = ["bold"] }
+"keyword.directive" = { fg = "purple" }
+
+"string" = { fg = "green" }
+"string.special" = { fg = "teal" }
+
+"constant" = { fg = "yellow" }
+"constant.builtin" = { fg = "yellow", modifiers = ["bold"] }
+"constant.numeric" = { fg = "yellow" }
+"constant.character.escape" = { fg = "teal" }
+
+"constructor" = { fg = "purple", modifiers = ["bold"] }
+
+"function" = { fg = "fg", modifiers = ["bold"] }
+"function.builtin" = { fg = "teal", modifiers = ["bold"] }
+"function.macro" = { fg = "purple" }
+
+"variable" = { fg = "fg" }
+"variable.parameter" = { fg = "fg_dim" }
+"variable.builtin" = { fg = "teal", modifiers = ["italic"] }
+"variable.other.member" = { fg = "fg" }
+"property" = { fg = "fg" }
+"attribute" = { fg = "teal" }
+
+namespace = { fg = "purple" }
+"module" = { fg = "purple" }
+
+"type" = { fg = "purple" }
+"type.builtin" = { fg = "purple", modifiers = ["italic"] }
+
+"operator" = { fg = "fg_dim" }
+"punctuation" = { fg = "muted" }
+"punctuation.special" = { fg = "teal" }
+
+"tag" = { fg = "primary", modifiers = ["bold"] }
+"label" = { fg = "primary" }
+"special" = { fg = "teal" }
+
+"markup.heading" = { fg = "primary", modifiers = ["bold"] }
+"markup.bold" = { modifiers = ["bold"] }
+"markup.italic" = { modifiers = ["italic"] }
+"markup.strikethrough" = { modifiers = ["crossed_out"] }
+"markup.link" = { fg = "primary" }
+"markup.link.url" = { fg = "primary", modifiers = ["underlined"] }
+"markup.raw" = { fg = "green" }
+"markup.list" = { fg = "primary" }
+"markup.quote" = { fg = "fg_dim", modifiers = ["italic"] }
+
+"diff.plus" = { fg = "green" }
+"diff.plus.gutter" = { fg = "green" }
+"diff.plus.word" = { modifiers = ["bold"] }
+"diff.minus" = { fg = "red" }
+"diff.minus.gutter" = { fg = "red" }
+"diff.minus.word" = { modifiers = ["bold"] }
+"diff.delta" = { fg = "primary" }
+"diff.delta.moved" = { fg = "purple" }
+"diff.delta.conflict" = { fg = "red", modifiers = ["bold"] }
+"diff.delta.gutter" = { fg = "primary" }
+
+error = { fg = "red" }
+warning = { fg = "yellow" }
+info = { fg = "primary" }
+hint = { fg = "teal" }
+
+"error.diagnostic.inline" = { fg = "red" }
+"warning.diagnostic.inline" = { fg = "yellow" }
+"info.diagnostic.inline" = { fg = "primary" }
+"hint.diagnostic.inline" = { fg = "teal" }
+
+"diagnostic.spelling" = { underline = { color = "teal", style = "dotted" } }
+
+"diagnostic.error" = { fg = "red", underline = { color = "red", style = "curl" } }
+"diagnostic.warning" = { fg = "yellow", underline = { color = "yellow", style = "curl" } }
+"diagnostic.info" = { fg = "primary", underline = { color = "primary", style = "curl" } }
+"diagnostic.hint" = { fg = "teal", underline = { color = "teal", style = "curl" } }
+"diagnostic.unnecessary" = { fg = "faint" }
+"diagnostic.deprecated" = { modifiers = ["crossed_out"] }
+
+# User interface
+# --------------
+"ui.background" = { fg = "fg", bg = "bg" }
+"ui.background.separator" = { fg = "grout" }
+"ui.text" = { fg = "fg" }
+"ui.text.focus" = { fg = "fg", bg = "surface", modifiers = ["bold"] }
+"ui.text.inactive" = { fg = "muted" }
+"ui.text.directory" = { fg = "primary", modifiers = ["bold"] }
+"ui.text.info" = { fg = "fg", bg = "bg_alt" }
+"ui.text.symlink" = { fg = "teal" }
+
+"ui.cursor" = { fg = "bg", bg = "ochre" }
+"ui.cursor.primary" = { fg = "bg", bg = "ochre" }
+"ui.cursor.match" = { fg = "primary", modifiers = ["bold", "underlined"] }
+
+"ui.selection" = { bg = "wash" }
+"ui.selection.primary" = { bg = "wash" }
+
+"ui.cursorline" = { bg = "bg_alt" }
+"ui.cursorline.primary" = { bg = "bg_alt" }
+"ui.cursorcolumn" = { bg = "bg_alt" }
+"ui.cursorcolumn.primary" = { bg = "bg_alt" }
+
+"ui.linenr" = { fg = "faint" }
+"ui.linenr.selected" = { fg = "ochre", modifiers = ["bold"] }
+"ui.gutter" = { fg = "faint", bg = "bg" }
+"ui.gutter.selected" = { fg = "ochre", bg = "bg" }
+
+"ui.debug.breakpoint" = { fg = "red" }
+"ui.debug.active" = { fg = "ochre", modifiers = ["bold"] }
+
+"ui.highlight" = { fg = "on_ochre", bg = "ochre" }
+"ui.highlight.frameline" = { fg = "on_primary", bg = "primary", modifiers = ["bold"] }
+
+"ui.statusline" = { fg = "fg", bg = "bg_alt" }
+"ui.statusline.inactive" = { fg = "muted", bg = "bg_alt" }
+"ui.statusline.normal" = { fg = "on_primary", bg = "primary", modifiers = ["bold"] }
+"ui.statusline.insert" = { fg = "on_ochre", bg = "ochre", modifiers = ["bold"] }
+"ui.statusline.select" = { fg = "on_primary", bg = "primary", modifiers = ["bold"] }
+"ui.statusline.separator" = { fg = "muted" }
+
+"ui.bufferline" = { fg = "muted", bg = "bg_alt" }
+"ui.bufferline.background" = { bg = "bg_alt" }
+"ui.bufferline.active" = { fg = "fg", bg = "bg", modifiers = ["bold"], underline = { color = "ochre", style = "line" } }
+
+"ui.popup" = { fg = "fg", bg = "bg_alt" }
+"ui.popup.info" = { fg = "fg", bg = "bg_alt" }
+"ui.menu" = { fg = "fg", bg = "bg_alt" }
+"ui.menu.selected" = { fg = "on_primary", bg = "primary", modifiers = ["bold"] }
+"ui.menu.scroll" = { bg = "surface" }
+"ui.help" = { fg = "fg", bg = "bg_alt" }
+"ui.picker.header" = { fg = "primary", modifiers = ["bold"] }
+"ui.picker.header.column" = { fg = "muted" }
+"ui.picker.header.column.active" = { fg = "fg", modifiers = ["bold"] }
+"ui.window" = { fg = "grout" }
+
+"ui.virtual" = { fg = "faint" }
+"ui.virtual.whitespace" = { fg = "surface" }
+"ui.virtual.ruler" = { bg = "bg_alt" }
+"ui.virtual.indent-guide" = { fg = "surface" }
+"ui.virtual.inlay-hint" = { fg = "faint", modifiers = ["italic"] }
+"ui.virtual.jump-label" = { fg = "on_ochre", bg = "ochre", modifiers = ["bold"] }
+"ui.virtual.wrap" = { fg = "faint" }
+"ui.virtual.fold" = { fg = "ochre", modifiers = ["bold"] }
+"ui.virtual.inline-blame" = { fg = "faint", modifiers = ["italic"] }
+
+tabstop = { bg = "wash" }
+
+[palette]
+bg = "#000000"         # true black
+bg_alt = "#07091F"     # cursorline, statusline, popups
+surface = "#0C1030"
+fg = "#F3F0E8"         # glaze
+fg_dim = "#C9CBE0"
+muted = "#8A8FB5"
+faint = "#5A5F88"
+grout = "#1E2A9E"      # cobalt tile: window borders
+primary = "#9FB2E4"    # wash stands in for cobalt, which vanishes on black
+on_primary = "#000000"
+wash = "#1E2A9E"       # selection
+wash_tile = "#1E2A9E"
+ochre = "#D49A1A"      # the one highlight: cursor, search, active line number
+on_ochre = "#0C1030"
+yellow = "#D49A1A"
+red = "#E0705A"
+green = "#7CBF7A"
+purple = "#C08AD6"
+teal = "#6FC3CF"
